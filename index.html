@@ -1,32 +1,62 @@
 <html>
 <head>
-<link rel="stylesheet" href="bbplayer.css">
-<style>.bbplayer {
-width: 50%;
-margin: 25%;
-padding: 10px;
-}
-.bb-trackTitle {
-padding: 10px;
-display: inline;
-}
-</style>
+	<link rel="stylesheet" href="css/bbplayer.css">
+	<link rel="stylesheet" href="css/blueimp-gallery.min.css">
+	<style>.bbplayer {
+		width: 50%;
+		margin: 25%;
+		padding: 10px;
+	}
+	.bb-trackTitle {
+		padding: 10px;
+		display: inline;
+	}
+	</style>
 </head>
 <body>
-<div class="bbplayer">
-  <span class="bb-rewind"></span>
-  <span class="bb-play"></span>
-  <span class="bb-forward"></span>
-  <span class="bb-trackTime"></span>
+	<div class="bbplayer">
+		<span class="bb-rewind"></span>
+		<span class="bb-play"></span>
+		<span class="bb-forward"></span>
+		<span class="bb-trackTime"></span>
 
-  <span class="bb-trackTitle"></span>
-   <span class="bb-trackLength"></span> 
-<audio>
-    <source src="20170511 The Chicken.mp3"/>
-    <source src="20170511 Stray Cat.mp3"/>
-    <source src="20170511 This Magic Moment.mp3"/>
-  </audio>
-</div>
-<script src="js/bbplayer.js"></script>
+		<span class="bb-trackTitle"></span>
+		<span class="bb-trackLength"></span>
+		<audio>
+			<source src="20170511 The Chicken.mp3"/>
+			<source src="20170511 Stray Cat.mp3"/>
+			<source src="20170511 This Magic Moment.mp3"/>
+		</audio>
+	</div>
+	<script src="js/bbplayer.js"></script>
+
+
+	<div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls">
+		<div class="slides"></div>
+		<h3 class="title"></h3>
+		<a class="prev">‹</a>
+		<a class="next">›</a>
+		<a class="close">×</a>
+		<a class="play-pause"></a>
+		<ol class="indicator"></ol>
+	</div>
+
+	<div id="links">
+		<a href="pics/1.jpg" title="Banana">
+			<img src="pics/thumbs/1.jpg" alt="Banana">
+		</a>
+	</div>
+
+	<script src="js/blueimp-gallery.min.js"></script>
+	<script>
+document.getElementById('links').onclick = function (event) {
+event = event || window.event;
+var target = event.target || event.srcElement,
+link = target.src ? target.parentNode : target,
+options = {index: link, event: event},
+links = this.getElementsByTagName('a');
+blueimp.Gallery(links, options);
+};
+	</script>
 </body>
 </html>
