@@ -3,12 +3,15 @@ from os import walk, path
 from jinja2 import Environment, FileSystemLoader
 from PIL import Image
 from random import shuffle
+import smtplib
+from email.mime.text import MIMEText
+import config
 
 env = Environment(loader=FileSystemLoader('templates'))
 
-def getFiles(path, ext=None, limit=10):
+def getFiles(directory, ext=None, limit=10):
 	files = []
-	for dirpath, dirname, filenames in walk(path):
+	for dirpath, dirname, filenames in walk(directory):
 		for f in filenames:
 			if ext:
 				if f.endswith(ext):
@@ -35,6 +38,38 @@ def home():
 	pics = getFiles('static/pics', 'jpg', 20)
 	return env.get_template('player.html').render(songs=songs, pics=pics)
 
+@hug.local()
+@hug.post('/contact')
+def contact(name=None, email=None, message=None):
+	print('got a message!', name, email, message)
+	msg = MIMEText(message)
+	msg['From'] = config.MAIL_DEFAULT_SENDER
+	msg['Subject'] = 'rsj form from: %s, %s' % (name, email)
+	if sendit(msg):
+		hug.redirect.to('/thanks')
+	else:
+		hug.redirect.to('/error')
+	return hug.redirect.to('/')
+
+@hug.local()
+@hug.get('/thanks', output=hug.output_format.html)
+def thanks():
+	return 'Thanks! Your email is sent! You will be redirected back in just a moment. <meta http-equiv="refresh" content="3;url=/"/>'
+
+def sendit(message):
+	try:
+		s=smtplib.SMTP(config.MAIL_SERVER, config.MAIL_PORT)
+		s.set_debuglevel(1)
+		#s.ehlo()
+		s.starttls()
+		s.login(config.MAIL_USERNAME, config.MAIL_PASSWORD)
+		s.sendmail(message['From'], config.MAIL_SENDTO, message.as_string())
+		s.quit()
+		return True
+	except Exception:
+		return False
+
+
 @hug.static('/static')
-def pics():
+def static():
 	return('static',)
