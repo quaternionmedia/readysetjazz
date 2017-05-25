@@ -1,7 +1,7 @@
 <html>
 <head>
-	<link rel="stylesheet" href="css/bbplayer.css">
-	<link rel="stylesheet" href="css/blueimp-gallery.css">
+	<link rel="stylesheet" href="static/css/bbplayer.css">
+	<link rel="stylesheet" href="static/css/blueimp-gallery.css">
 	<style>.bbplayer {
 		width: 50%;
 		margin: 25%;
@@ -24,11 +24,11 @@
 		<span class="bb-trackLength"></span>
 		<audio>
 			{% for song in songs %}
-			<source src="audio/{{song}}"/>
+			<source src="static/audio/{{song}}"/>
 			{% endfor %}
 		</audio>
 	</div>
-	<script src="js/bbplayer.js"></script>
+	<script src="static/js/bbplayer.js"></script>
 
 
 	<div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls">
@@ -43,13 +43,13 @@
 
 	<div id="links">
 		{% for pic in pics %}
-		<a href="pics/{{ pic }}" title="{{ pic }}">
-			<img src="thumbs/{{ pic }}" alt="{{ pic }}">
+		<a href="static/pics/{{ pic }}" title="{{ pic }}">
+			<img src="static/thumbs/{{ pic }}" alt="{{ pic }}">
 		</a>
 		{% endfor %}
 	</div>
 
-	<script src="js/blueimp-gallery.min.js"></script>
+	<script src="static/js/blueimp-gallery.min.js"></script>
 	<script>
 document.getElementById('links').onclick = function (event) {
 event = event || window.event;
