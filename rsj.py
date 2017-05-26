@@ -18,9 +18,23 @@ def getFiles(directory, ext=None, limit=10): # returns [(dir, file),]
 					files.append((dirpath, f))
 			else:
 				files.append((dirpath, f))
+	shuffle(files)
 	if len(files) > limit:
 		files = files[:limit]
 	return files
+
+def sendMail(message):
+	try:
+		s=smtplib.SMTP(config.MAIL_SERVER, config.MAIL_PORT)
+		s.set_debuglevel(1)
+		#s.ehlo()
+		s.starttls()
+		s.login(config.MAIL_USERNAME, config.MAIL_PASSWORD)
+		s.sendmail(message['From'], config.MAIL_SENDTO, message.as_string())
+		s.quit()
+		return True
+	except Exception:
+		return False
 
 @hug.startup()
 def thumbPics(api): # Check pics folder, make thumbs
@@ -29,15 +43,13 @@ def thumbPics(api): # Check pics folder, make thumbs
 	for pic in (p for p in pics if p not in thumbs):
 		im = Image.open(path.join(pic[0], pic[1]))
 		im.thumbnail((100, 100), Image.ANTIALIAS)
-		im.save(path.join('static/thumbs', pic[1]))
+		im.save(path.join(pic[0], '..', 'thumbs', pic[1]))
 
 @hug.local()
 @hug.get('/', output=hug.output_format.html)
 def home():
 	songs = getFiles('static/audio', 'mp3')
 	pics = getFiles('static/pics', 'jpg', 20)
-	shuffle(songs)
-	shuffle(pics)
 	return env.get_template('player.html').render(songs=songs, pics=pics)
 
 @hug.local()
@@ -57,20 +69,6 @@ def contact(name=None, email=None, message=None):
 @hug.get('/thanks', output=hug.output_format.html)
 def thanks():
 	return 'Thanks! Your email is sent! You will be redirected back in just a moment. <meta http-equiv="refresh" content="2;url=/"/>'
-
-def sendMail(message):
-	try:
-		s=smtplib.SMTP(config.MAIL_SERVER, config.MAIL_PORT)
-		s.set_debuglevel(1)
-		#s.ehlo()
-		s.starttls()
-		s.login(config.MAIL_USERNAME, config.MAIL_PASSWORD)
-		s.sendmail(message['From'], config.MAIL_SENDTO, message.as_string())
-		s.quit()
-		return True
-	except Exception:
-		return False
-
 
 @hug.static('/static')
 def static():
