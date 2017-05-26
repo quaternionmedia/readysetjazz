@@ -24,7 +24,7 @@
 		<span class="bb-trackLength"></span>
 		<audio>
 			{% for song in songs %}
-			<source src="static/audio/{{song}}"/>
+			<source src="{{ song[0] }}/{{ song[1] }}"/>
 			{% endfor %}
 		</audio>
 	</div>
@@ -43,8 +43,8 @@
 
 	<div id="links">
 		{% for pic in pics %}
-		<a href="static/pics/{{ pic }}" title="{{ pic }}">
-			<img src="static/thumbs/{{ pic }}" alt="{{ pic }}">
+		<a href="{{ pic[0] }}/{{ pic[1] }}" title="{{ pic[1] }}">
+			<img src="{{ pic[0] }}/../thumbs/{{ pic[1] }}" alt="{{ pic[1] }}">
 		</a>
 		{% endfor %}
 	</div>
@@ -61,6 +61,13 @@ blueimp.Gallery(links, options);
 };
 	</script>
 	<style>
+	body {
+		font-family: Verdana;
+
+	}
+	h1 {
+		text-align: center;
+	}
 	input[type=text], select, textarea {
 	    width: 100%; /* Full width */
 	    padding: 12px; /* Some padding */
@@ -95,7 +102,7 @@ blueimp.Gallery(links, options);
 	}
 </style>
 	<div class="container">
-		Contact us!
+	<h1>Hire us!</h1>
   <form action="/contact" method="POST">
 
     <label for="name">Name</label>
@@ -104,8 +111,8 @@ blueimp.Gallery(links, options);
     <label for="email">Email</label>
     <input type="text" id="email" name="email" placeholder="Your email">
 
-    <label for="message">Subject</label>
-    <textarea id="message" name="message" placeholder="When do you want to hire us?" style="height:200px"></textarea>
+    <label for="message">Message</label>
+    <textarea id="message" name="message" placeholder="When/where do you want to hire us?" style="height:200px"></textarea>
 
     <input type="submit" value="Submit">
 
