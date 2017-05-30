@@ -1,4 +1,5 @@
 import hug
+from time import time
 from os import walk, path
 from jinja2 import Environment, FileSystemLoader
 from PIL import Image
@@ -6,6 +7,19 @@ from random import shuffle
 import smtplib
 from email.mime.text import MIMEText
 import config
+#from pprint import pprint
+
+#from falcon_multipart.middleware import MultipartMiddleware
+
+import cgi
+#import cgitb
+#cgitb.enable()
+
+
+hug.API(__name__).http.output_format = hug.output_format.html
+#__hug__.http.add_middleware(MultipartMiddleware())
+#hug.API(__name__).http.add_middleware(middleware=MultipartMiddleware())
+
 
 env = Environment(loader=FileSystemLoader('templates'))
 
@@ -73,3 +87,81 @@ def thanks():
 @hug.static('/static')
 def static():
 	return('static',)
+
+@hug.local()
+@hug.get('/upload', output=hug.output_format.html)
+def uploader():
+	return env.get_template('uploader.html')
+
+@hug.post('/upload')#,versions=1)
+def upload_file(body,request,response):
+	"""Receives a stream of bytes and writes them to a file."""
+	print(len(body['files[]']))
+	print(dir(body))
+	#print(body)
+	for f in body['files[]']:
+		print(len(f))
+		#print(dir(f))
+		#print(dir(f.title))
+		#print(f.title.__name__)
+	#fileame = body['files[]'][0]
+	#filebody = body['files[]'][1]
+	#print(filebody)
+
+	#with open(filename,'wb') as f:
+		# chunksize = 4096
+		# while True:
+		# 	chunk = filebody.read(chunksize)
+		# 	if not chunk:
+		# 		break
+		# 	f.write(chunk)
+	return
+
+# @hug.local()
+# @hug.post('/upload')#,versions=1)
+# def upload(body,request,response):
+# 	"""Receives a stream of bytes and writes them to a file."""
+# 	#print(body)
+# 	c = 0
+# 	#print(list(body.keys()).pop()) #, dir(body.items))
+# 	#print(body['files[]']['name'])
+# 	files = []
+# 	# for n in body['files[]'][0]:
+# 	# 	files.append(n)
+# 	# 	c += 1
+# 	#print(dir(request.headers.keys))
+# 	env = request.env
+# 	env.setdefault('QUERY_STRING', '')
+# 	#ct = request.get_header('content-type')
+# 	#postvars = cgi.parse_multipart(fp=request.stream, pdict=ct)
+# 	#print(postvars.keys())
+# 	#form = cgi.FieldStorage(fp=request.stream, environ=request.env, headers=request.headers)
+# 	form = cgi.FieldStorage(fp=body, environ={'REQUEST_METHOD':'POST','CONTENT_TYPE':'MULTIPART/FORM-DATA'})
+# 	print(dir(form))
+# 	#print(form.file, form.filename, form.name, form.type)
+# 	#print(request.stream.fileno())
+# 	#print(dir(request.get_param()))
+# 	#print(dict(body))
+# 	#print(response.content)
+# 	# filename = body['files[]'][0]
+# 	# filebody = body['files[]'][1]
+# 	#print(filebody)
+# 	c = 0
+# 	for f in files:
+# 		with open('%s.jpg' % c,'wb') as out:
+# 			out.write(f)
+# 			c += 1
+# 	return hug.redirect.to('/success')
+
+@hug.local()
+@hug.get('/success')
+def win():
+	return 'Upload success! You will return in just a moment. <meta http-equiv="refresh" content="2;url=/"/>'
+
+# @hug.local()
+# @hug.post('/upload', output=hug.output_format.html)
+# def upload(body):
+# 	print('body: ', body)
+# 	#for f in filename
+# 	return {'filename': list(body.keys()).pop(), 'filesize ': len(list(body.values()).pop()),
+# 	'keys':list(body.keys())}
