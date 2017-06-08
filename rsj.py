@@ -7,18 +7,20 @@ from random import shuffle
 import smtplib
 from email.mime.text import MIMEText
 import config
-#from pprint import pprint
+from pprint import pprint
+import mimetypes
 
-#from falcon_multipart.middleware import MultipartMiddleware
+from falcon_multipart.middleware import MultipartMiddleware
 
-import cgi
+#import cgi
 #import cgitb
 #cgitb.enable()
 
 
 hug.API(__name__).http.output_format = hug.output_format.html
-#__hug__.http.add_middleware(MultipartMiddleware())
-#hug.API(__name__).http.add_middleware(middleware=MultipartMiddleware())
+mid = MultipartMiddleware()
+#__hug__.http.add_middleware(mid)
+#hug.API(__name__).http.add_middleware(middleware=mid)
 
 
 env = Environment(loader=FileSystemLoader('templates'))
@@ -95,12 +97,22 @@ def uploader():
 
 @hug.post('/upload')#,versions=1)
 def upload_file(body,request,response):
-	"""Receives a stream of bytes and writes them to a file."""
-	print(len(body['files[]']))
-	print(dir(body))
-	#print(body)
-	for f in body['files[]']:
-		print(len(f))
+	# """Receives a stream of bytes and writes them to a file."""
+	# print(len(body['files[]']))
+	#pprint(vars(body))
+	#pprint()
+	#pprint(dict(body))
+	print(dir(request))
+	print(dict(request.headers))
+	#print(mimetypes.guess_all_extensions(body['files'][0]))
+	#print(request.env['CONTENT_TYPE'])
+	#print(vars(request.env['wsgi.file_wrapper']))
+	#print(i)
+	#print(vars(request.env['wsgi.file_wrapper']))
+	#pprint(dir(response))
+	# #print(body)
+	# for f in body['files[]']:
+	# 	print(len(f))
 		#print(dir(f))
 		#print(dir(f.title))
 		#print(f.title.__name__)
