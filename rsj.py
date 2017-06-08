@@ -1,10 +1,10 @@
 import hug
-from time import time
+import pymongo
 from os import walk, path
 from jinja2 import Environment, FileSystemLoader
 from PIL import Image
 from random import shuffle
-import smtplib
+from smtplib import SMTP
 from email.mime.text import MIMEText
 import config
 from pprint import pprint
@@ -22,6 +22,9 @@ mid = MultipartMiddleware()
 #__hug__.http.add_middleware(mid)
 #hug.API(__name__).http.add_middleware(middleware=mid)
 
+
+client = pymongo.MongoClient()
+db = client.media
 
 env = Environment(loader=FileSystemLoader('templates'))
 
@@ -41,7 +44,7 @@ def getFiles(directory, ext=None, limit=10): # returns [(dir, file),]
 
 def sendMail(message):
 	try:
-		s=smtplib.SMTP(config.MAIL_SERVER, config.MAIL_PORT)
+		s=SMTP(config.MAIL_SERVER, config.MAIL_PORT)
 		s.set_debuglevel(1)
 		#s.ehlo()
 		s.starttls()
@@ -53,13 +56,15 @@ def sendMail(message):
 		return False
 
 @hug.startup()
-def thumbPics(api): # Check pics folder, make thumbs
+def checkFiles(api): # Check pics folder, make thumbs
 	thumbs = getFiles('static/thumbs', 'jpg')
 	pics = getFiles('static/pics', 'jpg')
+	music = getFiles('static/audio', 'mp3')
 	for pic in (p for p in pics if p not in thumbs):
 		im = Image.open(path.join(pic[0], pic[1]))
 		im.thumbnail((100, 100), Image.ANTIALIAS)
 		im.save(path.join(pic[0], '..', 'thumbs', pic[1]))
+	# compare with db
 
 @hug.local()
 @hug.get('/', output=hug.output_format.html)
