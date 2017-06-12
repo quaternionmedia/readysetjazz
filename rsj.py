@@ -8,23 +8,15 @@ from smtplib import SMTP
 from email.mime.text import MIMEText
 import config
 from pprint import pprint
-import mimetypes
 
-from falcon_multipart.middleware import MultipartMiddleware
-
-#import cgi
-#import cgitb
-#cgitb.enable()
-
+import csv
+import io
 
 hug.API(__name__).http.output_format = hug.output_format.html
-mid = MultipartMiddleware()
-#__hug__.http.add_middleware(mid)
-#hug.API(__name__).http.add_middleware(middleware=mid)
 
 
 client = pymongo.MongoClient()
-db = client.media
+db = client.rsj
 
 env = Environment(loader=FileSystemLoader('templates'))
 
@@ -49,22 +41,37 @@ def sendMail(message):
 		#s.ehlo()
 		s.starttls()
 		s.login(config.MAIL_USERNAME, config.MAIL_PASSWORD)
-		s.sendmail(message['From'], config.MAIL_SENDTO, message.as_string())
+		s.sendmail(message['From'], message['To'], message.as_string())
 		s.quit()
 		return True
 	except Exception:
 		return False
 
+def compare(reference, source): # check database query against files
+	ref = db.media.find(reference)
+	src = getFiles(source)
+	new = []
+	for q in (s for s in src if s[1] not in ref):
+		new.append({'name':q[1], 'type':'mp3'})
+	db.media.insert_many(new)
 @hug.startup()
 def checkFiles(api): # Check pics folder, make thumbs
 	thumbs = getFiles('static/thumbs', 'jpg')
 	pics = getFiles('static/pics', 'jpg')
 	music = getFiles('static/audio', 'mp3')
+	# compare with db
+	mp3 = db.media.find({'type': 'mp3'})
+	new = []
+	for song in (s for s in music if s[1] not in mp3):
+		new.append({'name':song[1], 'type':'mp3'})
+	db.media.insert_many(new)
+
+	#convert thumbs
 	for pic in (p for p in pics if p not in thumbs):
 		im = Image.open(path.join(pic[0], pic[1]))
 		im.thumbnail((100, 100), Image.ANTIALIAS)
 		im.save(path.join(pic[0], '..', 'thumbs', pic[1]))
-	# compare with db
+
 
 @hug.local()
 @hug.get('/', output=hug.output_format.html)
@@ -79,6 +86,7 @@ def contact(name=None, email=None, message=None):
 	#print('got a message!', name, email, message)
 	msg = MIMEText(message)
 	msg['From'] = config.MAIL_DEFAULT_SENDER
+	msg['To'] = config.MAIL_SENDTO
 	msg['Subject'] = 'rsj form from: %s, %s' % (name, email)
 	if sendMail(msg):
 		hug.redirect.to('/thanks')
@@ -182,3 +190,18 @@ def win():
 # 	#for f in filename
 # 	return {'filename': list(body.keys()).pop(), 'filesize ': len(list(body.values()).pop()),
 # 	'keys':list(body.keys())}
+
+
+@hug.local()
+@hug.post('/slt')
+def slt(body,request,response):
+	#print('body: ', body['formdata'].decode())
+	f = csv.reader(io.StringIO(body['formdata'].decode()))
+	for i in f:
+		msg = MIMEText(env.get_template('congrats.py').render(name=i[0], song=i[1], link=i[3]))
+		msg['From'] = 'mockrock@harpo.me'
+		msg['To'] = i[2]
+		msg['Subject'] = 'Mock Rock Music Video!'
+		if not sendMail(msg):
+			print('error sending to', msg['To'])
+		#print(vars(msg))
