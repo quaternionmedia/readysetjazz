@@ -9,10 +9,15 @@ from email.mime.text import MIMEText
 import config
 from pprint import pprint
 
+from falcon_multipart.middleware import MultipartMiddleware
+
+
 import csv
 import io
 
+
 hug.API(__name__).http.output_format = hug.output_format.html
+#hug.API(__name__).http.add_middleware(MultipartMiddleware())
 
 
 client = pymongo.MongoClient()
@@ -29,8 +34,8 @@ def getFiles(directory, ext=None, limit=10): # returns [(dir, file),]
 					files.append((dirpath, f))
 			else:
 				files.append((dirpath, f))
-	shuffle(files)
-	if len(files) > limit:
+	if (limit is not 0) and (len(files) > limit):
+		shuffle(files)
 		files = files[:limit]
 	return files
 
@@ -48,36 +53,49 @@ def sendMail(message):
 		return False
 
 def compare(reference, source): # check database query against files
-	ref = db.media.find(reference)
-	src = getFiles(source)
+	refs = []
+	for r in db.media.find(reference):
+		#print(r)
+		refs.append(r['name'])
+	#print('refs = ', refs)
+	#print('count = ', len(refs))
+	src = getFiles(source, ext=reference['type'], limit=0)
 	new = []
-	for q in (s for s in src if s[1] not in ref):
-		new.append({'name':q[1], 'type':'mp3'})
-	db.media.insert_many(new)
+	for q in (s for s in src if s[1] not in refs):
+		new.append({'name':q[1], 'type':q[1][1 + q[1].rfind('.'):].lower(), 'path':source})
+	if len(new) > 0:
+		print('about to insert ', new)
+		db.media.insert_many(new)
+
+def randQuery(fields=None, limit=10):
+	return [ d for d in db.media.aggregate( [ {'$match': fields}, { '$sample': {'size': limit }} ])]
+
 @hug.startup()
 def checkFiles(api): # Check pics folder, make thumbs
-	thumbs = getFiles('static/thumbs', 'jpg')
-	pics = getFiles('static/pics', 'jpg')
-	music = getFiles('static/audio', 'mp3')
+	thumbs = getFiles('static/thumbs', 'jpg', limit=0)
+	pics = getFiles('static/pics', 'jpg', limit=0)
+	music = getFiles('static/audio', 'mp3', limit=0)
 	# compare with db
-	mp3 = db.media.find({'type': 'mp3'})
-	new = []
-	for song in (s for s in music if s[1] not in mp3):
-		new.append({'name':song[1], 'type':'mp3'})
-	db.media.insert_many(new)
-
+	compare({'type': 'mp3'}, 'static/audio')
+	compare({'type': 'jpg'}, 'static/pics')
+	thumb = [t[1] for t in thumbs]
 	#convert thumbs
-	for pic in (p for p in pics if p not in thumbs):
+	for pic in (p for p in pics if p[1] not in thumb):
+		print('converting thumbnail ', pic)
 		im = Image.open(path.join(pic[0], pic[1]))
 		im.thumbnail((100, 100), Image.ANTIALIAS)
 		im.save(path.join(pic[0], '..', 'thumbs', pic[1]))
 
 
 @hug.local()
-@hug.get('/', output=hug.output_format.html)
+@hug.get('/')
 def home():
-	songs = getFiles('static/audio', 'mp3')
-	pics = getFiles('static/pics', 'jpg', 20)
+	# songs = query('static/audio', 'mp3')
+	# pics = getFiles('static/pics', 'jpg', 20)
+	songs = randQuery({'type':'mp3'})
+	pics = randQuery({'type':'jpg'})
+	print('songs = ', songs)
+	print('pics = ', pics)
 	return env.get_template('player.html').render(songs=songs, pics=pics)
 
 @hug.local()
@@ -95,7 +113,7 @@ def contact(name=None, email=None, message=None):
 	#return hug.redirect.to('/')
 
 @hug.local()
-@hug.get('/thanks', output=hug.output_format.html)
+@hug.get('/thanks')
 def thanks():
 	return 'Thanks! Your email is sent! You will be redirected back in just a moment. <meta http-equiv="refresh" content="2;url=/"/>'
 
@@ -111,13 +129,18 @@ def uploader():
 @hug.post('/upload')#,versions=1)
 def upload_file(body,request,response):
 	# """Receives a stream of bytes and writes them to a file."""
-	# print(len(body['files[]']))
-	#pprint(vars(body))
-	#pprint()
-	#pprint(dict(body))
-	print(dir(request))
-	print(dict(request.headers))
-	#print(mimetypes.guess_all_extensions(body['files'][0]))
+	#pprint((request.env['wsgi.input'].fileno))
+	print(request.stream.stream.read(20))
+	print('stream = ', stream)
+	n = len(body['files'])
+	for f in body['files']:
+		#with open(path.join('static', f), 'wb') as o:
+		#	o.write(body['stream'][n])
+		n += 1
+	#pprint(dir(response))
+	#pprint(dir(request.env['wsgi.file_wrapper']))
+	pprint((request.stream.stream.read))
+
 	#print(request.env['CONTENT_TYPE'])
 	#print(vars(request.env['wsgi.file_wrapper']))
 	#print(i)
@@ -133,63 +156,13 @@ def upload_file(body,request,response):
 	#filebody = body['files[]'][1]
 	#print(filebody)
 
-	#with open(filename,'wb') as f:
-		# chunksize = 4096
-		# while True:
-		# 	chunk = filebody.read(chunksize)
-		# 	if not chunk:
-		# 		break
-		# 	f.write(chunk)
 	return
-
-# @hug.local()
-# @hug.post('/upload')#,versions=1)
-# def upload(body,request,response):
-# 	"""Receives a stream of bytes and writes them to a file."""
-# 	#print(body)
-# 	c = 0
-# 	#print(list(body.keys()).pop()) #, dir(body.items))
-# 	#print(body['files[]']['name'])
-# 	files = []
-# 	# for n in body['files[]'][0]:
-# 	# 	files.append(n)
-# 	# 	c += 1
-# 	#print(dir(request.headers.keys))
-# 	env = request.env
-# 	env.setdefault('QUERY_STRING', '')
-# 	#ct = request.get_header('content-type')
-# 	#postvars = cgi.parse_multipart(fp=request.stream, pdict=ct)
-# 	#print(postvars.keys())
-# 	#form = cgi.FieldStorage(fp=request.stream, environ=request.env, headers=request.headers)
-# 	form = cgi.FieldStorage(fp=body, environ={'REQUEST_METHOD':'POST','CONTENT_TYPE':'MULTIPART/FORM-DATA'})
-# 	print(dir(form))
-# 	#print(form.file, form.filename, form.name, form.type)
-# 	#print(request.stream.fileno())
-# 	#print(dir(request.get_param()))
-# 	#print(dict(body))
-# 	#print(response.content)
-# 	# filename = body['files[]'][0]
-# 	# filebody = body['files[]'][1]
-# 	#print(filebody)
-# 	c = 0
-# 	for f in files:
-# 		with open('%s.jpg' % c,'wb') as out:
-# 			out.write(f)
-# 			c += 1
-# 	return hug.redirect.to('/success')
 
 @hug.local()
 @hug.get('/success')
 def win():
 	return 'Upload success! You will return in just a moment. <meta http-equiv="refresh" content="2;url=/"/>'
 
-# @hug.local()
-# @hug.post('/upload', output=hug.output_format.html)
-# def upload(body):
-# 	print('body: ', body)
-# 	#for f in filename
-# 	return {'filename': list(body.keys()).pop(), 'filesize ': len(list(body.values()).pop()),
-# 	'keys':list(body.keys())}
 
 
 @hug.local()

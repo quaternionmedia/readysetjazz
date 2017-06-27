@@ -3,10 +3,9 @@
 	<link rel="stylesheet" href="static/css/bbplayer.css">
 	<link rel="stylesheet" href="static/css/blueimp-gallery.css">
 	<style>.bbplayer {
-		width: 90%;
-		margin: 2%;
+		width: 50%;
+		margin: 25%;
 		padding: 10px;
-		text-align: center;
 	}
 	.bb-trackTitle {
 		padding: 10px;
@@ -25,7 +24,7 @@
 		<span class="bb-trackLength"></span>
 		<audio>
 			{% for song in songs %}
-			<source src="{{ song[0] }}/{{ song[1] }}"/>
+			<source src="{{ song['path'] }}/{{ song['name'] }}"/>
 			{% endfor %}
 		</audio>
 	</div>
@@ -44,8 +43,8 @@
 
 	<div id="links">
 		{% for pic in pics %}
-		<a href="{{ pic[0] }}/{{ pic[1] }}" title="{{ pic[1] }}">
-			<img src="{{ pic[0] }}/../thumbs/{{ pic[1] }}" alt="{{ pic[1] }}">
+		<a href="{{ pic['path'] }}/{{ pic['name'] }}" title="{{ pic['name'] }}">
+			<img src="static/thumbs/{{ pic['name'] }}" alt="{{ pic['name'] }}">
 		</a>
 		{% endfor %}
 	</div>

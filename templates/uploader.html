@@ -44,8 +44,10 @@
 <html>
 <body>
 	<form method="post" action="/upload" enctype="multipart/form-data">
-		<input type="file" name="files" multiple>
-		<input type="submit" value="Upload">
+		
+		<input type="file" name="files" multiple/>
+		<input type="hidden" name=secret value="files" />
+		<input type="submit" value="Upload"/>
 	</form>
 
 </body>
