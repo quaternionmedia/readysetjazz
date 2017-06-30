@@ -9,7 +9,7 @@ from email.mime.text import MIMEText
 import config
 from pprint import pprint
 
-from falcon_multipart.middleware import MultipartMiddleware
+
 
 
 import csv
