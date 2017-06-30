@@ -1,122 +1,194 @@
 <html>
 <head>
-	<link rel="stylesheet" href="static/css/bbplayer.css">
-	<link rel="stylesheet" href="static/css/blueimp-gallery.css">
-	<style>.bbplayer {
-		width: 50%;
-		margin: 25%;
+	<link rel="stylesheet" href="static/css/bbplayer.css" />
+	<link rel="stylesheet" href="static/css/blueimp-gallery.css" />
+	<link rel="stylesheet" href="static/css/animate.css" />
+	<style>
+	section {
+		height:100vh;
+	}
+	header {
+		position: fixed;
+		width: 100%;
+	}
+	body {
+		font-family: Verdana;
+	}
+	.bg {
+    /* The image used */
+    background-image: url("{{ pics[0]['path'] }}/{{ pics[0]['name'] }}");
+
+    /* Full height */
+    height: 100%;
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+	h1 {
+		position:fixed;
+		text-align: left;
+		font-size: 1em;
+
+	}
+	h2 {
+		text-align: center;
+	}
+	.bbplayer {
+		width: 70%;
+		margin-left: 15%;
+		margin-right: 15%;
 		padding: 10px;
 	}
 	.bb-trackTitle {
 		padding: 10px;
 		display: inline;
 	}
+@keyframes size {
+	0% {font-size:  15em;
+	opacity: 0}
+	50% {font-size: 15em;
+	opacity: 1}
+	100% {font-size: 1em;
+	top: 0px;}
+}
+#ready {
+	top: 0px;
+	animation: swing 1s, size 2s;
+}
+#set {
+	top:20px;
+	animation: rollIn 1s, size 2s;
+	animation-delay: 1.5s;
+}
+#jazz {
+	top: 40px;
+	animation: jello 1s, size 2s;
+	animation-delay: 3.5s;
+}
 	</style>
+
 </head>
 <body>
-	<div class="bbplayer">
-		<span class="bb-rewind"></span>
-		<span class="bb-play"></span>
-		<span class="bb-forward"></span>
-		<span class="bb-trackTime"></span>
+	<header>
+		<div id="bbplayer" class="bbplayer">
+			<span class="bb-rewind"></span>
+			<span class="bb-play"></span>
+			<span class="bb-forward"></span>
+			<span class="bb-trackTime"></span>
 
-		<span class="bb-trackTitle"></span>
-		<span class="bb-trackLength"></span>
-		<audio>
-			{% for song in songs %}
-			<source src="{{ song['path'] }}/{{ song['name'] }}"/>
-			{% endfor %}
-		</audio>
+			<span class="bb-trackTitle"></span>
+			<span class="bb-trackLength"></span>
+			<audio>
+				{% for song in songs %}
+				<source src="{{ song['path'] }}/{{ song['name'] }}"/>
+				{% endfor %}
+			</audio>
+		</div>
+
+	<div>
+		<h1 id="ready" class="animated">Ready</h1><br />
+		<h1 id="set" class="animated">Set</h1><br />
+		<h1 id="jazz" class="animated">Jazz!</h1>
+
 	</div>
+</header>
+<section id="top" class="bg">
+
+	</section>
 	<script src="static/js/bbplayer.js"></script>
 
+	<section id="gallery">
 
-	<div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls">
-		<div class="slides"></div>
-		<h3 class="title"></h3>
-		<a class="prev"><</a>
-		<a class="next">></a>
-		<a class="close">x</a>
-		<a class="play-pause">+</a>
-		<ol class="indicator">-</ol>
-	</div>
+		<div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls">
+			<div class="slides"></div>
+			<h3 class="title">Us</h3>
+			<a class="prev"><</a>
+			<a class="next">></a>
+			<a class="close">x</a>
+			<a class="play-pause">+</a>
+			<ol class="indicator">-</ol>
+		</div>
 
-	<div id="links">
-		{% for pic in pics %}
-		<a href="{{ pic['path'] }}/{{ pic['name'] }}" title="{{ pic['name'] }}">
-			<img src="static/thumbs/{{ pic['name'] }}" alt="{{ pic['name'] }}">
-		</a>
-		{% endfor %}
-	</div>
+		<div id="links">
+			{% for pic in pics %}
+			<a href="{{ pic['path'] }}/{{ pic['name'] }}" title="{{ pic['name'] }}">
+				<img src="static/thumbs/{{ pic['name'] }}" alt="{{ pic['name'] }}">
+			</a>
+			{% endfor %}
+		</div>
 
-	<script src="static/js/blueimp-gallery.min.js"></script>
-	<script>
-document.getElementById('links').onclick = function (event) {
-event = event || window.event;
-var target = event.target || event.srcElement,
-link = target.src ? target.parentNode : target,
-options = {index: link, event: event},
-links = this.getElementsByTagName('a');
-blueimp.Gallery(links, options);
-};
-	</script>
-	<style>
-	body {
-		font-family: Verdana;
 
-	}
-	h1 {
-		text-align: center;
-	}
-	input[type=text], select, textarea {
-	    width: 100%; /* Full width */
-	    padding: 12px; /* Some padding */
-	    border: 1px solid #ccc; /* Gray border */
-	    border-radius: 4px; /* Rounded borders */
-	    box-sizing: border-box; /* Make sure that padding and width stays in place */
-	    margin-top: 6px; /* Add a top margin */
-	    margin-bottom: 16px; /* Bottom margin */
-	    resize: vertical /* Allow the user to vertically resize the textarea (not horizontally) */
-	}
+		<script src="static/js/blueimp-gallery.min.js"></script>
+		<script>
+		document.getElementById('links').onclick = function (event) {
+			event = event || window.event;
+			var target = event.target || event.srcElement,
+			link = target.src ? target.parentNode : target,
+			options = {index: link, event: event},
+			links = this.getElementsByTagName('a');
+			blueimp.Gallery(links, options);
+		};
+		</script>
 
-	/* Style the submit button with a specific background color etc */
-	input[type=submit] {
-	    background-color: #4CAF50;
-	    color: white;
-	    padding: 12px 20px;
-	    border: none;
-	    border-radius: 4px;
-	    cursor: pointer;
-	}
+	</section>
+	<section id="contact">
+		<div class="container">
+			<h2>Hire us!</h2>
+			<form action="/contact" method="POST">
 
-	/* When moving the mouse over the submit button, add a darker green color */
-	input[type=submit]:hover {
-	    background-color: #45a049;
-	}
+				<label for="name">Name</label>
+				<input type="text" id="name" name="name" placeholder="Your name">
 
-	/* Add a background color and some padding around the form */
-	.container {
-	    border-radius: 5px;
-	    background-color: #f2f2f2;
-	    padding: 20px;
-	}
-</style>
-	<div class="container">
-	<h1>Hire us!</h1>
-  <form action="/contact" method="POST">
+				<label for="email">Email</label>
+				<input type="text" id="email" name="email" placeholder="Your email">
 
-    <label for="name">Name</label>
-    <input type="text" id="name" name="name" placeholder="Your name">
+				<label for="message">Message</label>
+				<textarea id="message" name="message" placeholder="When/where do you want to hire us?" style="height:200px"></textarea>
 
-    <label for="email">Email</label>
-    <input type="text" id="email" name="email" placeholder="Your email">
+				<input type="submit" value="Submit">
 
-    <label for="message">Message</label>
-    <textarea id="message" name="message" placeholder="When/where do you want to hire us?" style="height:200px"></textarea>
+			</form>
+		</div>
+	</section>
 
-    <input type="submit" value="Submit">
-
-  </form>
-</div>
 </body>
+<footer>
+<style>
+
+input[type=text], select, textarea {
+	width: 100%; /* Full width */
+	padding: 12px; /* Some padding */
+	border: 1px solid #ccc; /* Gray border */
+	border-radius: 4px; /* Rounded borders */
+	box-sizing: border-box; /* Make sure that padding and width stays in place */
+	margin-top: 6px; /* Add a top margin */
+	margin-bottom: 16px; /* Bottom margin */
+	resize: vertical /* Allow the user to vertically resize the textarea (not horizontally) */
+}
+
+/* Style the submit button with a specific background color etc */
+input[type=submit] {
+	background-color: #4CAF50;
+	color: white;
+	padding: 12px 20px;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+/* When moving the mouse over the submit button, add a darker green color */
+input[type=submit]:hover {
+	background-color: #45a049;
+}
+
+/* Add a background color and some padding around the form */
+.container {
+	border-radius: 5px;
+	background-color: #f2f2f2;
+	padding: 20px;
+}
+</style>
+</footer>
 </html>
