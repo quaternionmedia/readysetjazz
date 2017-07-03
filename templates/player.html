@@ -3,8 +3,9 @@
 	<link rel="stylesheet" href="static/css/bbplayer.css" />
 	<link rel="stylesheet" href="static/css/blueimp-gallery.css" />
 	<link rel="stylesheet" href="static/css/animate.css" />
+	<meta name="viewport" content="width=device-width">
 	<style>
-	section {
+	top {
 		height:100vh;
 	}
 	header {
@@ -15,26 +16,27 @@
 		font-family: Verdana;
 	}
 	.bg {
-    /* The image used */
-    background-image: url("{{ pics[0]['path'] }}/{{ pics[0]['name'] }}");
+		/* The image used */
+		background-image: url("{{ pics[0]['path'] }}/{{ pics[0]['name'] }}");
 
-    /* Full height */
-    height: 100%;
+		/* Full height */
+		height: 100%;
 
-    /* Center and scale the image nicely */
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-}
+		/* Center and scale the image nicely */
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: cover;
+	}
 	span.h1 {
 		position:fixed;
 		text-align: left;
 		font-size: 1em;
-		text-shadow: 0 0 25px #FFF;
+		text-shadow: 0 0 8px #FFF, 0 0 35px #FFF;
 		line-height: .4;
 		margin-left: 10px;
-    margin-top: -10px;
+		margin-top: -10px;
 		animation: fadeIn 2s;
+		text-decoration: none;
 	}
 	h2 {
 		font-size: 2em;
@@ -49,42 +51,70 @@
 	textarea {
 		font-size: 1em;
 	}
-
+	iframe {
+		width: 100%;
+	}
 	.bbplayer {
 		width: 70%;
 		margin-left: 130px;
 		margin-right: 10%;
 		padding: 10px;
 		background: rgba(20, 20,20,.7);
+		text-align: center;
 	}
-	.bb-trackTitle {
+	.bb-trackTitle, .bb-trackTime {
 		padding: 10px;
 		display: inline;
 	}
-@keyframes size {
-	0% {font-size:  1em;
+	@keyframes size {
+		0% {font-size:  1em;
+		}
+		50% {
+			font-size: 20vw;
+			padding: 100px;
+		}
+		100% {
+			font-size: 2em;
+		}
 	}
-	50% {
-		font-size: 10em;
-		padding: 100px;
-}
-	100% {
-		font-size: 2em;
-		transform: translate(0,0);
+	#ready {
+		animation: size 2.5s, swing 1.5s;
+		animation-delay: .2s;
 	}
-}
-#ready {
-	animation: size 2.5s, swing 1.5s;
-	animation-delay: .2s;
-}
-#set {
-	animation: size 2.5s, rollIn 1.5s;
-	animation-delay: 2s;
-}
-#jazz {
-	animation: size 2.5s, jello 1.5s;
-	animation-delay: 4s;
-}
+	#set {
+		animation: size 2.5s, rollIn 1.5s;
+		animation-delay: 2s;
+	}
+	#jazz {
+		animation: size 2.5s, jello 1.5s;
+		animation-delay: 4s;
+	}
+	@media (max-width: 1000px) {
+		body {font-size: 1.5em;}
+		header {}
+		h1 {font-size: 5vw}
+		#bbplayer {
+			width: 70vw;
+			height: auto;
+			margin-left: 21vw;
+			margin-top: 0px;
+
+		}
+		.bb-rewind, .bb-play, .bb-forward, .bb-trackTime, .bb-trackTitle, .bb-trackLength {
+		    background-size: 5vw;
+		    height: 4vw;
+		    width: 4vw;
+				padding: 1px;
+				padding-left: 3px;
+				font-size: 1.5em;
+		}
+		.bb-play {
+			width: 5vw;
+			height: 5vw;
+			background-position: 1vw;
+		}
+
+	}
 	</style>
 
 </head>
@@ -92,34 +122,35 @@
 	<header>
 		<div>
 			<span class="h1">
-			<h1 id="ready" class="animated">Ready</h1>
-			<h1 id="set" class="animated">Set</h1>
-			<h1 id="jazz" class="animated">Jazz!</h1>
-		</span>
-		<div id="bbplayer" class="bbplayer">
-			<span class="bb-rewind"></span>
-			<span class="bb-play"></span>
-			<span class="bb-forward"></span>
-			<span class="bb-trackTime"></span>
 
-			<span class="bb-trackTitle"></span>
-			<span class="bb-trackLength"></span>
-			<audio>
-				{% for song in songs %}
-				<source src="{{ song['path'] }}/{{ song['name'] }}"/>
-				{% endfor %}
-			</audio>
+					<h1 id="ready" class="animated" href="/">
+						<a href="#" style="text-decoration: none; color:black">Ready</h1>
+					<h1 id="set" class="animated">Set</h1>
+					<h1 id="jazz" class="animated">Jazz!</a></h1>
+			</span>
+			<div id="bbplayer" class="bbplayer">
+				<span class="bb-rewind"></span>
+				<span class="bb-play"></span>
+				<span class="bb-forward"></span>
+				<span class="bb-trackTime"></span>
+				<span class="bb-trackTitle"></span>
+				<span class="bb-trackLength"></span>
+				<audio>
+					{% for song in songs %}
+					<source src="{{ song['path'] }}/{{ song['name'] }}"/>
+					{% endfor %}
+				</audio>
+			</div>
+
 		</div>
 
-	</div>
-
-</header>
-<section id="top" class="bg">
+	</header>
+	<section id="top" class="bg">
 
 	</section>
 	<script src="static/js/bbplayer.js"></script>
 
-	<section id="gallery" style="height: 50vh">
+	<section id="gallery">
 
 		<div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls">
 			<div class="slides"></div>
@@ -152,6 +183,19 @@
 		};
 		</script>
 
+	</section>
+	<section id="map">
+		<h2>Our Next Gig</h2>
+		<p>
+			{{ gig['venue']}} - {{ gig['date'] }} at {{ gig['time'] }}
+		</p>
+		<br />
+		<iframe src="//www.google.com/maps/embed/v1/place?q={{ gig['address'] }}
+		&zoom=13
+		&attribution_source=Google+Maps+Embed+API
+		&attribution_web_url=https://developers.google.com/maps/documentation/embed/
+		&key=***REMOVED***" allowfullscreen>
+</iframe>
 	</section>
 	<section id="contact">
 		<div class="container">
