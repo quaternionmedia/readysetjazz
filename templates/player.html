@@ -3,6 +3,7 @@
 	<link rel="stylesheet" href="static/css/bbplayer.css" />
 	<link rel="stylesheet" href="static/css/blueimp-gallery.css" />
 	<link rel="stylesheet" href="static/css/animate.css" />
+	<meta name="viewport" content="width=device-width">
 	<style>
 	top {
 		height:100vh;
@@ -30,7 +31,7 @@
 		position:fixed;
 		text-align: left;
 		font-size: 1em;
-		text-shadow: 0 0 25px #FFF;
+		text-shadow: 0 0 8px #FFF, 0 0 35px #FFF;
 		line-height: .4;
 		margin-left: 10px;
 		margin-top: -10px;
@@ -59,8 +60,9 @@
 		margin-right: 10%;
 		padding: 10px;
 		background: rgba(20, 20,20,.7);
+		text-align: center;
 	}
-	.bb-trackTitle {
+	.bb-trackTitle, .bb-trackTime {
 		padding: 10px;
 		display: inline;
 	}
@@ -68,12 +70,11 @@
 		0% {font-size:  1em;
 		}
 		50% {
-			font-size: 10em;
+			font-size: 20vw;
 			padding: 100px;
 		}
 		100% {
 			font-size: 2em;
-			transform: translate(0,0);
 		}
 	}
 	#ready {
@@ -87,6 +88,32 @@
 	#jazz {
 		animation: size 2.5s, jello 1.5s;
 		animation-delay: 4s;
+	}
+	@media (max-width: 1000px) {
+		body {font-size: 1.5em;}
+		header {}
+		h1 {font-size: 5vw}
+		#bbplayer {
+			width: 70vw;
+			height: auto;
+			margin-left: 21vw;
+			margin-top: 0px;
+
+		}
+		.bb-rewind, .bb-play, .bb-forward, .bb-trackTime, .bb-trackTitle, .bb-trackLength {
+		    background-size: 5vw;
+		    height: 4vw;
+		    width: 4vw;
+				padding: 1px;
+				padding-left: 3px;
+				font-size: 1.5em;
+		}
+		.bb-play {
+			width: 5vw;
+			height: 5vw;
+			background-position: 1vw;
+		}
+
 	}
 	</style>
 
@@ -106,7 +133,6 @@
 				<span class="bb-play"></span>
 				<span class="bb-forward"></span>
 				<span class="bb-trackTime"></span>
-
 				<span class="bb-trackTitle"></span>
 				<span class="bb-trackLength"></span>
 				<audio>
