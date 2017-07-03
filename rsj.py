@@ -9,7 +9,10 @@ from email.mime.text import MIMEText
 import config
 from pprint import pprint
 
-
+nextGig = {'venue': 'Crepes and Burgers',
+'address':'8000 Auburn Blvd, Citrus Heights, CA 95610',
+'date':'7/8/2017',
+'time':'6p-8p'}
 
 
 import csv
@@ -96,7 +99,7 @@ def home():
 	pics = randQuery({'type':'jpg'})
 	print('songs = ', songs)
 	print('pics = ', pics)
-	return env.get_template('player.html').render(songs=songs, pics=pics)
+	return env.get_template('player.html').render(songs=songs, pics=pics, gig=nextGig)
 
 @hug.local()
 @hug.post('/contact')
