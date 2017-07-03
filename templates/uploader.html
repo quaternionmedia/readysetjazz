@@ -1,0 +1,54 @@
+<!doctype html>
+<!-- <html>
+<head>
+	<title>Test</title>
+</head>
+<body>
+	<form method="post" action="/upload" enctype="multipart/form-data">
+		<input type="file" name="files[]" multiple>
+		<pre id="filelist"/>
+		</pre>
+		<input type="submit" value="Upload">
+	</form>
+	<?php
+	if (isset($_FILES['files[]'])) {
+		$myFile = $_FILES['files[]'];
+		$fileCount = count($myFile["name"]);
+
+		for ($i = 0; $i < $fileCount; $i++) {
+			?>
+			<p>File #<?= $i+1 ?>:</p>
+			<p>
+				Name: <?= $myFile["name"][$i] ?><br>
+				Temporary file: <?= $myFile["tmp_name"][$i] ?><br>
+				Type: <?= $myFile["type"][$i] ?><br>
+				Size: <?= $myFile["size"][$i] ?><br>
+				Error: <?= $myFile["error"][$i] ?><br>
+			</p>
+			<?php
+		}
+	}
+	?>
+</body>
+</html> -->
+<!--
+<html>
+<script src="/static/js/flow.js" type="text/javascript"></script>
+
+<script>var flow = new Flow({
+  target:'/upload',
+  //query:{upload_token:'my_token'}
+});</script>
+</html> -->
+
+<html>
+<body>
+	<form method="post" action="/upload" enctype="multipart/form-data">
+		
+		<input type="file" name="files" multiple/>
+		<input type="hidden" name=secret value="files" />
+		<input type="submit" value="Upload"/>
+	</form>
+
+</body>
+</html>
