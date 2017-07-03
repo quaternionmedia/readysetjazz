@@ -26,52 +26,76 @@
     background-repeat: no-repeat;
     background-size: cover;
 }
-	h1 {
+	span.h1 {
 		position:fixed;
 		text-align: left;
 		font-size: 1em;
-
+		text-shadow: 0 0 25px #FFF;
+		line-height: .4;
+		margin-left: 10px;
+    margin-top: -10px;
+		animation: fadeIn 2s;
 	}
 	h2 {
+		font-size: 2em;
 		text-align: center;
 	}
+	label {
+		font-size: 1.5em;
+	}
+	input {
+		font-size: 1em;
+	}
+	textarea {
+		font-size: 1em;
+	}
+
 	.bbplayer {
 		width: 70%;
-		margin-left: 15%;
-		margin-right: 15%;
+		margin-left: 130px;
+		margin-right: 10%;
 		padding: 10px;
+		background: rgba(20, 20,20,.7);
 	}
 	.bb-trackTitle {
 		padding: 10px;
 		display: inline;
 	}
 @keyframes size {
-	0% {font-size:  15em;
-	opacity: 0}
-	50% {font-size: 15em;
-	opacity: 1}
-	100% {font-size: 1em;
-	top: 0px;}
+	0% {font-size:  1em;
+	}
+	50% {
+		font-size: 10em;
+		padding: 100px;
+}
+	100% {
+		font-size: 2em;
+		transform: translate(0,0);
+	}
 }
 #ready {
-	top: 0px;
-	animation: swing 1s, size 2s;
+	animation: size 2.5s, swing 1.5s;
+	animation-delay: .2s;
 }
 #set {
-	top:20px;
-	animation: rollIn 1s, size 2s;
-	animation-delay: 1.5s;
+	animation: size 2.5s, rollIn 1.5s;
+	animation-delay: 2s;
 }
 #jazz {
-	top: 40px;
-	animation: jello 1s, size 2s;
-	animation-delay: 3.5s;
+	animation: size 2.5s, jello 1.5s;
+	animation-delay: 4s;
 }
 	</style>
 
 </head>
 <body>
 	<header>
+		<div>
+			<span class="h1">
+			<h1 id="ready" class="animated">Ready</h1>
+			<h1 id="set" class="animated">Set</h1>
+			<h1 id="jazz" class="animated">Jazz!</h1>
+		</span>
 		<div id="bbplayer" class="bbplayer">
 			<span class="bb-rewind"></span>
 			<span class="bb-play"></span>
@@ -87,19 +111,15 @@
 			</audio>
 		</div>
 
-	<div>
-		<h1 id="ready" class="animated">Ready</h1><br />
-		<h1 id="set" class="animated">Set</h1><br />
-		<h1 id="jazz" class="animated">Jazz!</h1>
-
 	</div>
+
 </header>
 <section id="top" class="bg">
 
 	</section>
 	<script src="static/js/bbplayer.js"></script>
 
-	<section id="gallery">
+	<section id="gallery" style="height: 50vh">
 
 		<div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls">
 			<div class="slides"></div>
