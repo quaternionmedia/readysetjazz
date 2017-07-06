@@ -13,7 +13,9 @@
 		width: 100%;
 	}
 	body {
+		font-size: 12pt;
 		font-family: Verdana;
+		background-color: #f2f2f2;
 	}
 	.bg {
 		/* The image used */
@@ -21,6 +23,7 @@
 
 		/* Full height */
 		height: 100%;
+		margin: -8px;
 
 		/* Center and scale the image nicely */
 		background-position: center;
@@ -42,6 +45,25 @@
 		font-size: 2em;
 		text-align: center;
 	}
+	h3 {
+		font-size: 3em;
+		text-align: center;
+		opacity: 0;
+		text-shadow: 0 0 57px #FFF, 0 0 85px #FFF;
+		animation: fadeIn 2s forwards;
+		animation-delay: 6s;
+	}
+	h6 {
+	padding-left: 18vw;
+	padding-right: 18vw;
+	font-size: .8em;
+	font-weight: normal;
+	text-align: center;
+	opacity: 0;
+	animation: fadeIn 2s forwards;
+	animation-delay: 8s;
+	background-color: #f2f2f2;
+}
 	label {
 		font-size: 1.5em;
 	}
@@ -55,9 +77,10 @@
 		width: 100%;
 	}
 	.bbplayer {
-		width: 70%;
-		margin-left: 130px;
-		margin-right: 10%;
+		max-width: 87vw;
+		min-width: 65vw;
+		margin-left: 13vw;
+		margin-right: 1vw;
 		padding: 10px;
 		background: rgba(20, 20,20,.7);
 		text-align: center;
@@ -79,22 +102,25 @@
 	}
 	#ready {
 		animation: size 2.5s, swing 1.5s;
+		webkit-animation: size 2.5s, swing 1.5s;
 		animation-delay: .2s;
 	}
 	#set {
 		animation: size 2.5s, rollIn 1.5s;
+		webkit-animation: size 2.5s, rollIn 1.5s;
 		animation-delay: 2s;
 	}
 	#jazz {
 		animation: size 2.5s, jello 1.5s;
+		webkit-animation: size 2.5s, jello 1.5s;
 		animation-delay: 4s;
 	}
 	@media (max-width: 1000px) {
-		body {font-size: 1.5em;}
+		body {font-size: 1.3em;}
 		header {}
 		h1 {font-size: 5vw}
 		#bbplayer {
-			width: 70vw;
+			width: 65vw;
 			height: auto;
 			margin-left: 21vw;
 			margin-top: 0px;
@@ -122,7 +148,6 @@
 	<header>
 		<div>
 			<span class="h1">
-
 					<h1 id="ready" class="animated" href="/">
 						<a href="#" style="text-decoration: none; color:black">Ready</h1>
 					<h1 id="set" class="animated">Set</h1>
@@ -141,17 +166,21 @@
 					{% endfor %}
 				</audio>
 			</div>
-
+			<script src="static/js/bbplayer.js"></script>
 		</div>
 
 	</header>
 	<section id="top" class="bg">
+		<div style="height:34vh">
+		</div>
+<h3>Need a band?</h3>
 
+<h6>
+	From jazz and rock to blues and pop, "Ready Set Jazz" is ready to liven up any atmosphere! From parties and weddings to bars, restaurnts, or nightclubs, we've got a set for everything!
+</h6>
 	</section>
-	<script src="static/js/bbplayer.js"></script>
 
 	<section id="gallery">
-
 		<div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls">
 			<div class="slides"></div>
 			<h3 class="title">Us</h3>
@@ -170,8 +199,8 @@
 			{% endfor %}
 		</div>
 
-
 		<script src="static/js/blueimp-gallery.min.js"></script>
+
 		<script>
 		document.getElementById('links').onclick = function (event) {
 			event = event || window.event;
@@ -182,8 +211,8 @@
 			blueimp.Gallery(links, options);
 		};
 		</script>
-
 	</section>
+
 	<section id="map">
 		<h2>Our Next Gig</h2>
 		<p>
@@ -197,6 +226,7 @@
 		&key=***REMOVED***" allowfullscreen>
 </iframe>
 	</section>
+
 	<section id="contact">
 		<div class="container">
 			<h2>Hire us!</h2>
@@ -218,6 +248,7 @@
 	</section>
 
 </body>
+
 <footer>
 <style>
 
