@@ -68,6 +68,12 @@ def compare(reference, source): # check database query against files
 	if len(new) > 0:
 		print('about to insert ', new)
 		db.media.insert_many(new)
+	old = []
+	for q in (r for r in refs if r not in src):
+		old.append(q)
+	if len(old) > 0:
+		print('about to delete photos not found in database')
+		db.media.remove({'name':{'$in':old}})
 
 def randQuery(fields=None, limit=10):
 	return [ d for d in db.media.aggregate( [ {'$match': fields}, { '$sample': {'size': limit }} ])]

@@ -3,14 +3,21 @@
 	<link rel="stylesheet" href="static/css/bbplayer.css" />
 	<link rel="stylesheet" href="static/css/blueimp-gallery.css" />
 	<link rel="stylesheet" href="static/css/animate.css" />
-	<meta name="viewport" content="width=device-width">
+	<meta name="viewport" content="width=device-width; initial-scale=1.0;">
 	<style>
+	html {
+		-webkit-text-size-adjust: none;
+	}
 	top {
 		height:100vh;
 	}
 	header {
-		position: fixed;
+		position: relative;
 		width: 100%;
+	}
+	#head {
+		position:fixed;
+		z-index:1;
 	}
 	body {
 		font-size: 12pt;
@@ -37,7 +44,7 @@
 		text-shadow: 0 0 8px #FFF, 0 0 35px #FFF;
 		line-height: .4;
 		margin-left: 10px;
-		margin-top: -10px;
+		margin-top: 0px;
 		animation: fadeIn 2s;
 		text-decoration: none;
 	}
@@ -54,15 +61,16 @@
 		animation-delay: 6s;
 	}
 	h6 {
-	padding-left: 18vw;
-	padding-right: 18vw;
-	font-size: .8em;
+	padding: 20px;
+	font-size: 1em;
 	font-weight: normal;
 	text-align: center;
 	opacity: 0;
 	animation: fadeIn 2s forwards;
 	animation-delay: 8s;
-	background-color: #f2f2f2;
+	background-color: rgba(242,242,242,.9);
+
+
 }
 	label {
 		font-size: 1.5em;
@@ -115,17 +123,27 @@
 		webkit-animation: size 2.5s, jello 1.5s;
 		animation-delay: 4s;
 	}
+	@media (min-width:768px) {
+	h6 {
+	margin-left: 25vw;
+	margin-right: 25vw;
+	border-radius: 15px;
+	}
+}
 	@media (max-width: 1000px) {
-		body {font-size: 1.3em;}
+		body {font-size: 1.2em;}
 		header {}
-		h1 {font-size: 5vw}
+		h1 {
+		font-size: 20pt;
+		}
 		#bbplayer {
 			width: 65vw;
 			height: auto;
-			margin-left: 21vw;
-			margin-top: 0px;
+			margin-left: 111px;
+			margin-top: 2px;
 
 		}
+
 		.bb-rewind, .bb-play, .bb-forward, .bb-trackTime, .bb-trackTitle, .bb-trackLength {
 		    background-size: 5vw;
 		    height: 4vw;
@@ -141,12 +159,25 @@
 		}
 
 	}
+	@media (max-height: 450px) {
+		#top {
+			height: 575px;
+		}
+		h3 {
+			font-size: 1.5em;
+		}
+	}
+	@media (max-width: 450px) {
+	body {
+		font-size: 12pt;
+	}
+}
 	</style>
 
 </head>
 <body>
 	<header>
-		<div>
+		<div id="head">
 			<span class="h1">
 					<h1 id="ready" class="animated" href="/">
 						<a href="#" style="text-decoration: none; color:black">Ready</h1>
@@ -171,13 +202,14 @@
 
 	</header>
 	<section id="top" class="bg">
-		<div style="height:34vh">
+		<div style="height:30vh">
 		</div>
-<h3>Need a band?</h3>
-
+	<h3>Need a band?</h3>
+	<div style="height:38vh">
 <h6>
-	From jazz and rock to blues and pop, "Ready Set Jazz" is ready to liven up any atmosphere! From parties and weddings to bars, restaurnts, or nightclubs, we've got a set for everything!
+	From jazz and rock to blues and pop, "Ready Set Jazz" is ready to liven up any atmosphere! From parties and weddings to bars, restaurant, or nightclubs, we've got a set for everything!
 </h6>
+</div>
 	</section>
 
 	<section id="gallery">
