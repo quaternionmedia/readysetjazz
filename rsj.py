@@ -9,10 +9,10 @@ from email.mime.text import MIMEText
 import config
 from pprint import pprint
 
-nextGig = {'venue': 'Crepes and Burgers',
-'address':'8000 Auburn Blvd, Citrus Heights, CA 95610',
-'date':'7/8/2017',
-'time':'6p-9p'}
+nextGig = {'venue': 'RendezVous Winery',
+'address':'35265 Willow Ave, Clarksburg, CA 95612',
+'date':'8/13/2017',
+'time':'1:30p-4:00p'}
 
 
 import csv

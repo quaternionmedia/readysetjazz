@@ -5,8 +5,9 @@
 	<link rel="stylesheet" href="static/css/animate.css" />
 	<meta name="viewport" content="width=device-width; initial-scale=1.0;">
 	<style>
+	div, p, a, li, td, h1 { -webkit-text-size-adjust:100%; }
 	html {
-		-webkit-text-size-adjust: none;
+
 	}
 	top {
 		height:100vh;
@@ -23,6 +24,7 @@
 		font-size: 12pt;
 		font-family: Verdana;
 		background-color: #f2f2f2;
+		-webkit-text-size-adjust: 100%;
 	}
 	.bg {
 		/* The image used */
@@ -37,7 +39,7 @@
 		background-repeat: no-repeat;
 		background-size: cover;
 	}
-	span.h1 {
+	span.icon {
 		position:fixed;
 		text-align: left;
 		font-size: 1em;
@@ -47,6 +49,9 @@
 		margin-top: 0px;
 		animation: fadeIn 2s;
 		text-decoration: none;
+	}
+	h1 {
+		font-size: 2em;
 	}
 	h2 {
 		font-size: 2em;
@@ -102,7 +107,8 @@
 		}
 		50% {
 			font-size: 20vw;
-			padding: 100px;
+			padding-left: 30vw;
+			padding-top: 40vh;
 		}
 		100% {
 			font-size: 2em;
@@ -131,10 +137,10 @@
 	}
 }
 	@media (max-width: 1000px) {
-		body {font-size: 1.2em;}
+		body {font-size: 1em;}
 		header {}
 		h1 {
-		font-size: 20pt;
+		font-size: 26px;
 		}
 		#bbplayer {
 			width: 65vw;
@@ -149,7 +155,7 @@
 		    height: 4vw;
 		    width: 4vw;
 				padding: 1px;
-				padding-left: 3px;
+				padding-left: 5px;
 				font-size: 1.5em;
 		}
 		.bb-play {
@@ -178,8 +184,8 @@
 <body>
 	<header>
 		<div id="head">
-			<span class="h1">
-					<h1 id="ready" class="animated" href="/">
+			<span class="icon">
+					<h1 id="ready" class="animated" href="#">
 						<a href="#" style="text-decoration: none; color:black">Ready</h1>
 					<h1 id="set" class="animated">Set</h1>
 					<h1 id="jazz" class="animated">Jazz!</a></h1>
@@ -213,6 +219,8 @@
 	</section>
 
 	<section id="gallery">
+		<div class="container">
+
 		<div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls">
 			<div class="slides"></div>
 			<h3 class="title">Us</h3>
@@ -243,9 +251,11 @@
 			blueimp.Gallery(links, options);
 		};
 		</script>
+	</div>
 	</section>
 
 	<section id="map">
+		<div class="container">
 		<h2>Our Next Gig</h2>
 		<p>
 			{{ gig['venue']}} - {{ gig['date'] }} at {{ gig['time'] }}
@@ -256,7 +266,7 @@
 		&attribution_source=Google+Maps+Embed+API
 		&attribution_web_url=https://developers.google.com/maps/documentation/embed/
 		&key=***REMOVED***" allowfullscreen>
-</iframe>
+</iframe></div>
 	</section>
 
 	<section id="contact">
@@ -314,7 +324,7 @@ input[type=submit]:hover {
 .container {
 	border-radius: 5px;
 	background-color: #f2f2f2;
-	padding: 20px;
+	padding: 30px;
 }
 </style>
 </footer>
