@@ -62,6 +62,9 @@ def compare(reference, source): # check database query against files
 	#print('refs = ', refs)
 	#print('count = ', len(refs))
 	src = getFiles(source, ext=reference['type'], limit=0)
+	srcs = [] # names of db items
+	for s in src:
+		srcs.append(s[1])
 	new = []
 	for q in (s for s in src if s[1] not in refs):
 		new.append({'name':q[1], 'type':q[1][1 + q[1].rfind('.'):].lower(), 'path':source})
@@ -69,10 +72,10 @@ def compare(reference, source): # check database query against files
 		print('about to insert ', new)
 		db.media.insert_many(new)
 	old = []
-	for q in (r for r in refs if r not in src):
+	for q in (r for r in refs if r not in srcs):
 		old.append(q)
 	if len(old) > 0:
-		print('about to delete photos not found in database')
+		print('about to delete media not found in database', old)
 		db.media.remove({'name':{'$in':old}})
 
 def randQuery(fields=None, limit=10):
