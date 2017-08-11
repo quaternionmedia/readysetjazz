@@ -87,7 +87,11 @@
 		font-size: 1em;
 	}
 	iframe {
-		width: 100%;
+		width: 100%
+	}
+	#map {
+		max-width: 80%;
+		padding-left: 10%;
 	}
 	.bbplayer {
 		max-width: 87vw;
@@ -129,7 +133,20 @@
 		webkit-animation: size 2.5s, jello 1.5s;
 		animation-delay: 4s;
 	}
-	@media (min-width:768px) {
+	@media screen and (max-height: 450px) {
+		#top {
+			height: 575px;
+		}
+		h3 {
+			font-size: 1.5em;
+		}
+	}
+	@media screen and (max-width: 450px) {
+	body {
+		font-size: 12pt;
+	}
+}
+	@media screen and (min-width:768px) {
 	h6 {
 	margin-left: 25vw;
 	margin-right: 25vw;
@@ -165,19 +182,7 @@
 		}
 
 	}
-	@media (max-height: 450px) {
-		#top {
-			height: 575px;
-		}
-		h3 {
-			font-size: 1.5em;
-		}
-	}
-	@media (max-width: 450px) {
-	body {
-		font-size: 12pt;
-	}
-}
+
 	</style>
 
 </head>
