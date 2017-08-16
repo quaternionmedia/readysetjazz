@@ -77,9 +77,11 @@
 
 
 }
+form {
 	label {
 		font-size: 1.5em;
 	}
+}
 	input {
 		font-size: 1em;
 	}
@@ -102,6 +104,25 @@
 		padding: 10px;
 		display: inline;
 	}
+
+	@media screen and (max-width: 650px) {
+form {
+		label {
+	    font-size: 0;
+	  }
+	  label:before {
+	    margin: 0;
+	    font-size: 18px;
+	  }
+	}
+}
+	@media screen and (max-width: 400px) {
+form {
+		  label {
+	    padding: 15px;
+	  }
+	}
+}
 	@keyframes size {
 		0% {font-size:  1em;
 		}
@@ -254,7 +275,69 @@
 		</script>
 	</div>
 	</section>
+	<style>
+	main {
+	*, *:before, *:after {
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+	}
+}
+	main div {
+		display: none;
+	}
+	main input {
+		display: none;
+	}
 
+	main label {
+		display: inline-block;
+		margin: 0 0 -1px;
+		padding: 15px 25px;
+		font-weight: 600;
+		text-align: center;
+		color: #bbb;
+		border: 1px solid transparent;
+	}
+
+	main label:before {
+		font-family: fontawesome;
+		font-weight: normal;
+		margin-right: 10px;
+	}
+
+	main label:hover {
+		color: #888;
+		cursor: pointer;
+	}
+
+	main input:checked + label {
+		color: #555;
+		border: 1px solid #ddd;
+		border-top: 2px solid orange;
+		border-bottom: 1px solid #fff;
+	}
+
+{% for content in contents %}
+	#{{content['name']}}:checked ~ #{{ content['name']}}-bio{% if not loop.last%},{% endif %}{% endfor %} {
+		display: block;
+	}
+}	</style>
+<section id="about">
+	<main>
+
+	{% for content in contents %}
+  <input id="{{ content['name'] }}" type="radio" name="tabs" {% if loop.first %} checked {% endif %}>
+  <label for="{{ content['name'] }}">{{ content['name'] }}</label>
+    {% endfor %}
+		{% for content in contents %}
+  <div id="{{ content['name'] }}-bio">
+		{{ content['bio'] }}
+	</div>
+	{% endfor %}
+
+</main>
+</section>
 	<section id="map">
 		<div class="container">
 		<h2>Our Next Gig</h2>

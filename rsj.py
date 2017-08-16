@@ -14,6 +14,8 @@ nextGig = {'venue': 'RendezVous Winery',
 'date':'8/13/2017',
 'time':'1:30p-4:00p'}
 
+bios = [{'name':'Harpo', 'bio':'harpo bio'}, {'name':'Peter', 'bio':'peter bio'}, {'name':'Kenny', 'bio':'kenny bio'}]
+
 
 import csv
 import io
@@ -107,7 +109,7 @@ def home():
 	pics = randQuery({'type':'jpg'})
 	print('songs = ', songs)
 	print('pics = ', pics)
-	return env.get_template('player.html').render(songs=songs, pics=pics, gig=nextGig)
+	return env.get_template('player.html').render(songs=songs, pics=pics, gig=nextGig, contents=bios)
 
 @hug.local()
 @hug.post('/contact')
