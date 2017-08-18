@@ -18,6 +18,7 @@
 	}
 	#head {
 		position:fixed;
+		z-index: 10;
 	}
 	#about {
 		text-align: center;
@@ -255,8 +256,8 @@ form {
 </div>
 	</section>
 
-	<section id="gallery">
-		<div class="container">
+	<section id="gallery" class="container">
+
 
 		<div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls">
 			<div class="slides"></div>
@@ -333,10 +334,9 @@ form {
 
 main img {
 	float: right;
-max-height: 40vh;
-max-width: 60vw;
-margin-left: 6vw;
-margin-right: 6vw
+max-height: 50vh;
+max-width: 50vw;
+margin: 2vw;
 }
 
 main p {
@@ -349,8 +349,8 @@ main div:not(:checked) {
 	transition: all ease-in-out 0.7s 0.2s;
 }
 
-{% for content in contents %}
-	#{{content['name']}}:checked ~ #{{ content['name']}}-bio{% if not loop.last%},{% endif %}{% endfor %} {
+{% for bio in bios %}
+	#{{bio['name']}}:checked ~ #{{ bio['name']}}-bio{% if not loop.last%},{% endif %}{% endfor %} {
 		margin: 5vw;
 		 opacity: 1;
 		 max-height: 50vh;
@@ -364,13 +364,13 @@ main div:not(:checked) {
 
 	<main>
 
-	{% for content in contents %}
-  <input id="{{ content['name'] }}" type="radio" name="tabs" {% if loop.first %} checked {% endif %}>
-  <label for="{{ content['name'] }}">{{ content['name'] }}</label>
+	{% for bio in bios %}
+  <input id="{{ bio['name'] }}" type="radio" name="tabs" {% if loop.first %} checked {% endif %}>
+  <label for="{{ bio['name'] }}">{{ bio['name'] }}</label>
     {% endfor %}
-		{% for content in contents %}
-  <div id="{{ content['name'] }}-bio" class="">
-		<p><img src="{{pics[1]['path']}}/{{pics[1]['name']}}"/>{{ content['bio'] }}</p>
+		{% for bio in bios %}
+  <div id="{{ bio['name'] }}-bio" class="">
+		<p><img src="{{bio['path']}}/{{bio['pic']}}"/>{{ bio['bio'] }}</p>
 	</div>
 	{% endfor %}
 
