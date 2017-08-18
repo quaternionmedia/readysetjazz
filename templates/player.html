@@ -279,13 +279,11 @@ form {
 	main {
 	*, *:before, *:after {
 		margin: 0;
-		padding: 0;
+		padding: 5vw;
 		box-sizing: border-box;
 	}
 }
-	main div {
-		display: none;
-	}
+
 	main input {
 		display: none;
 	}
@@ -318,10 +316,34 @@ form {
 		border-bottom: 1px solid #fff;
 	}
 
+main img {
+	float: right;
+max-height: 40vh;
+max-width: 60vw;
+margin-left: 6vw;
+margin-right: 6vw
+}
+
+main p {
+
+
+}
+
+main div:not(:checked) {
+	display: flex;
+	opacity: 0;
+	max-height: 0vh;
+	transition: all ease-in-out 0.7s 0.2s;
+}
 {% for content in contents %}
 	#{{content['name']}}:checked ~ #{{ content['name']}}-bio{% if not loop.last%},{% endif %}{% endfor %} {
-		display: block;
+		margin: 5vw;
+		 opacity: 1;
+		 max-height: 50vh;
+		 transition: all ease-in-out 0.7s 0.2s;
+
 	}
+
 }	</style>
 <section id="about">
 	<main>
@@ -331,8 +353,8 @@ form {
   <label for="{{ content['name'] }}">{{ content['name'] }}</label>
     {% endfor %}
 		{% for content in contents %}
-  <div id="{{ content['name'] }}-bio">
-		{{ content['bio'] }}
+  <div id="{{ content['name'] }}-bio" class="">
+		<p><img src="{{pics[1]['path']}}/{{pics[1]['name']}}"/>{{ content['bio'] }}</p>
 	</div>
 	{% endfor %}
 
