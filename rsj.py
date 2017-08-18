@@ -9,10 +9,8 @@ from email.mime.text import MIMEText
 import config
 from pprint import pprint
 
-nextGig = {'venue': 'RendezVous Winery',
-'address':'35265 Willow Ave, Clarksburg, CA 95612',
-'date':'8/13/2017',
-'time':'1:30p-4:00p'}
+nextGig = {'venue': 'Fallen Heroes Memorial',
+'address':'El Macero Country Club - 44571 Clubhouse Drive,  El Macero, CA 95618', 'date':'2017-09-18', 'starttime':'16:00', 'endtime':'18:30'}
 
 bios = [{'name':'Harpo', 'bio':'harpo bio'}, {'name':'Peter', 'bio':'peter bio'}, {'name':'Kenny', 'bio':'kenny bio'}]
 

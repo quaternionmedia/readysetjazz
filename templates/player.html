@@ -3,7 +3,7 @@
 	<link rel="stylesheet" href="static/css/bbplayer.css" />
 	<link rel="stylesheet" href="static/css/blueimp-gallery.css" />
 	<link rel="stylesheet" href="static/css/animate.css" />
-	<meta name="viewport" content="width=device-width; initial-scale=1.0;">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<style>
 	div, p, a, li, td, h1 { -webkit-text-size-adjust:100%; }
 	html {
@@ -18,7 +18,14 @@
 	}
 	#head {
 		position:fixed;
-		z-index:1;
+	}
+	#about {
+		text-align: center;
+	}
+
+	.container {
+		border-radius: 5px;
+		margin: 8vw;
 	}
 	body {
 		font-size: 12pt;
@@ -162,8 +169,12 @@ form {
 	body {
 		font-size: 12pt;
 	}
+	.container {
+		margin: 2vw;
+	}
 }
 	@media screen and (min-width:768px) {
+
 	h6 {
 	margin-left: 25vw;
 	margin-right: 25vw;
@@ -175,6 +186,10 @@ form {
 		header {}
 		h1 {
 		font-size: 26px;
+		}
+		.container {
+			border-radius: 5px;
+			margin: 4vw;
 		}
 		#bbplayer {
 			width: 65vw;
@@ -312,7 +327,7 @@ form {
 	main input:checked + label {
 		color: #555;
 		border: 1px solid #ddd;
-		border-top: 2px solid orange;
+		border-top: 2px solid #cc5555;
 		border-bottom: 1px solid #fff;
 	}
 
@@ -325,8 +340,6 @@ margin-right: 6vw
 }
 
 main p {
-
-
 }
 
 main div:not(:checked) {
@@ -335,6 +348,7 @@ main div:not(:checked) {
 	max-height: 0vh;
 	transition: all ease-in-out 0.7s 0.2s;
 }
+
 {% for content in contents %}
 	#{{content['name']}}:checked ~ #{{ content['name']}}-bio{% if not loop.last%},{% endif %}{% endfor %} {
 		margin: 5vw;
@@ -345,7 +359,9 @@ main div:not(:checked) {
 	}
 
 }	</style>
-<section id="about">
+<section id="about" class="container">
+	<h2>About Us</h2>
+
 	<main>
 
 	{% for content in contents %}
@@ -364,9 +380,34 @@ main div:not(:checked) {
 		<div class="container">
 		<h2>Our Next Gig</h2>
 		<p>
-			{{ gig['venue']}} - {{ gig['date'] }} at {{ gig['time'] }}
+			{{ gig['venue']}} - {{ gig['date'] }} at {{ gig['starttime'] }} - {{gig['endtime']}}
 		</p>
 		<br />
+<link rel="stylesheet" href="static/css/clock.css" />
+<div id="clockdiv">
+  <div>
+    <span class="days"></span>
+    <div class="smalltext">Days</div>
+  </div>
+  <div>
+    <span class="hours"></span>
+    <div class="smalltext">Hours</div>
+  </div>
+  <div>
+    <span class="minutes"></span>
+    <div class="smalltext">Minutes</div>
+  </div>
+  <div>
+    <span class="seconds"></span>
+    <div class="smalltext">Seconds</div>
+  </div>
+</div>
+<script src="static/js/clock.js"></script>
+<script>
+var deadline = new Date(Date.parse("{{gig['date']}}T{{gig['starttime']}}-0700"));
+initializeClock('clockdiv', deadline);
+</script>
+
 		<iframe src="//www.google.com/maps/embed/v1/place?q={{ gig['address'] }}
 		&zoom=13
 		&attribution_source=Google+Maps+Embed+API
@@ -426,12 +467,7 @@ input[type=submit]:hover {
 	background-color: #45a049;
 }
 
-/* Add a background color and some padding around the form */
-.container {
-	border-radius: 5px;
-	background-color: #f2f2f2;
-	padding: 30px;
-}
+
 </style>
 </footer>
 </html>
