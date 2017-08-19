@@ -10,7 +10,7 @@ import config
 from pprint import pprint
 
 nextGig = {'venue': 'Fallen Heroes Memorial',
-'address':'El Macero Country Club - 44571 Clubhouse Drive,  El Macero, CA 95618', 'date':'2017-09-18', 'starttime':'16:00', 'endtime':'18:30'}
+'address':'El Macero Country Club - 44571 Clubhouse Drive,  El Macero, CA 95618', 'date':'September 18, 2017', 'starttime':'16:00', 'endtime':'18:30'}
 
 
 import csv

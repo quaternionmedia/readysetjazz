@@ -402,9 +402,10 @@ main div:not(:checked) {
     <div class="smalltext">Seconds</div>
   </div>
 </div>
-<script src="static/js/clock.js"></script>
+
+<script src="static/js/clock.js" type="text/javascript"></script>
 <script>
-var deadline = new Date(Date.parse("{{gig['date']}}T{{gig['starttime']}}-0700"));
+var deadline = new Date(Date.parse("{{gig['date']}} {{gig['starttime']}} -0700"));
 initializeClock('clockdiv', deadline);
 </script>
 
