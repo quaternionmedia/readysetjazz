@@ -21,7 +21,7 @@ hug.API(__name__).http.output_format = hug.output_format.html
 
 
 client = pymongo.MongoClient()
-db = client.rsj
+db = client.harpo
 
 
 env = Environment(loader=FileSystemLoader('templates'))
