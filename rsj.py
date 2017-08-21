@@ -20,7 +20,7 @@ import io
 hug.API(__name__).http.output_format = hug.output_format.html
 
 
-client = pymongo.MongoClient()
+client = pymongo.MongoClient(connect=False)
 db = client.rsj
 
 
