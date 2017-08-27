@@ -2,6 +2,10 @@
 <head>
 	<link rel="stylesheet" href="static/css/bbplayer.css" />
 	<link rel="stylesheet" href="static/css/blueimp-gallery.css" />
+	<link rel="stylesheet" href="static/css/blueimp-gallery-video.css" />
+	<script src="static/js/blueimp-gallery.min.js"></script>
+	<script src="static/js/blueimp-gallery-youtube.js"></script>
+
 	<link rel="stylesheet" href="static/css/animate.css" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<style>
@@ -237,12 +241,44 @@ form {
 	<section id="top" class="bg">
 		<div style="height:30vh">
 		</div>
-	<h3>Need a band?</h3>
+	<h3>Professional Freelance Artist</h3>
 	<div style="height:38vh">
-<h6>
-	From jazz and rock to blues and pop, "Ready Set Jazz" is ready to liven up any atmosphere! From parties and weddings to bars, restaurant, or nightclubs, we've got a set for everything!
-</h6>
+<h6>From video production to jazz improvisation, Harpo does lots of things! Check them out below!</h6>
 </div>
+	</section>
+
+	<section id="video" class="container">
+		<div id="videos" style="height:60vw" class="blueimp-gallery blueimp-gallery-carousel blueimp-gallery-controls blueimp-gallery-display blueimp-gallery-playing">
+    <div class="slides"></div>
+    <h3 class="title"></h3>
+    <a class="prev"><</a>
+    <a class="next">></a>
+    <a class="play-pause"></a>
+    <ol class="indicator"></ol>
+</div>
+
+<script>
+blueimp.Gallery(
+[
+	{% for video in videos %}
+	{ title: "{{ video['title'] }}",
+	href: "{{ video['link'] }}",
+	type: "text/html",
+	youtube: "{{ video['link'][-11:]}}",
+	poster: "https://i1.ytimg.com/vi/{{ video['link'][-11:] }}/hqdefault.jpg"},
+	{% endfor %}
+],
+    {
+        container: '#videos',
+        carousel: true,
+        slidesContainer: 'div',
+        titleElement: 'h3',
+        indicatorContainer: 'ol',
+				youTubeClickToPlay: false
+
+    }
+);
+</script>
 	</section>
 
 	<section id="gallery" class="container">
@@ -266,7 +302,6 @@ form {
 			{% endfor %}
 		</div>
 
-		<script src="static/js/blueimp-gallery.min.js"></script>
 
 		<script>
 		document.getElementById('links').onclick = function (event) {
@@ -280,6 +315,8 @@ form {
 		</script>
 	</div>
 	</section>
+
+
 	<style>
 	main {
 	*, *:before, *:after {

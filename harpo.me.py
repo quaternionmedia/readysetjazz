@@ -83,6 +83,10 @@ def compare(reference, source): # check database query against files
 		db.media.remove({'name':{'$in':old}})
 
 def randQuery(fields=None, limit=10):
+	if limit == 0:
+		x = [ d for d in db.media.find(fields) ]
+		shuffle(x)
+		return x
 	return [ d for d in db.media.aggregate( [ {'$match': fields}, { '$sample': {'size': limit }} ])]
 
 @hug.startup()
@@ -108,12 +112,13 @@ def home():
 	# songs = query('static/audio', 'mp3')
 	# pics = getFiles('static/pics', 'jpg', 20)
 	songs = randQuery({'type':'mp3'})
-	pics = randQuery({'type':'jpg'})
+	pics = randQuery({'type':'jpg'}, limit=0)
 	bios = [m for m in db.musicians.find()]
+	videos =  [m for m in db.videos.find()]
 	print('bios = ', bios)
 	# print('songs = ', songs)
 	# print('pics = ', pics)
-	return env.get_template('player.html').render(songs=songs, pics=pics, gig=nextGig, bios=bios)
+	return env.get_template('player.html').render(songs=songs, pics=pics, gig=nextGig, bios=bios, videos=videos)
 
 @hug.local()
 @hug.post('/contact')
