@@ -2,7 +2,6 @@
 <head>
 	<link rel="stylesheet" href="static/css/bbplayer.css" />
 	<link rel="stylesheet" href="static/css/blueimp-gallery.css" />
-	<link rel="stylesheet" href="static/css/blueimp-gallery-video.css" />
 	<link rel="stylesheet" href="static/css/animate.css" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<style>
@@ -144,12 +143,21 @@ form {
 			font-size: 2em;
 		}
 	}
-	#harpoSplash {
+	#ready {
 		animation: size 2.5s, swing 1.5s;
 		webkit-animation: size 2.5s, swing 1.5s;
 		animation-delay: .2s;
 	}
-
+	#set {
+		animation: size 2.5s, rollIn 1.5s;
+		webkit-animation: size 2.5s, rollIn 1.5s;
+		animation-delay: 2s;
+	}
+	#jazz {
+		animation: size 2.5s, jello 1.5s;
+		webkit-animation: size 2.5s, jello 1.5s;
+		animation-delay: 4s;
+	}
 	@media screen and (max-height: 450px) {
 		#top {
 			height: 575px;
@@ -215,8 +223,10 @@ form {
 	<header>
 		<div id="head">
 			<span class="icon">
-					<h1 id="harpoSplash" class="animated" href="#">
-						<a href="#" style="text-decoration: none; color:black">Harpo!</h1></a>
+					<h1 id="ready" class="animated" href="#">
+						<a href="#" style="text-decoration: none; color:black">Ready</h1>
+					<h1 id="set" class="animated">Set</h1>
+					<h1 id="jazz" class="animated">Jazz!</a></h1>
 			</span>
 			<div id="bbplayer" class="bbplayer">
 				<span class="bb-rewind"></span>
@@ -238,13 +248,15 @@ form {
 	<section id="top" class="bg">
 		<div style="height:30vh">
 		</div>
-	<h3>Professional Freelance Artist</h3>
+	<h3>Need a band?</h3>
 	<div style="height:38vh">
-<h6>From video production to jazz improvisation, Harpo does lots of things! Check them out below!</h6>
+<h6>
+	From jazz and rock to blues and pop, "Ready Set Jazz" is ready to liven up any atmosphere! From parties and weddings to bars, restaurant, or nightclubs, we've got a set for everything!
+</h6>
 </div>
 	</section>
-
 	<section id="video" class="container">
+		<link rel="stylesheet" href="static/css/blueimp-gallery-video.css" />
 		<div id="videos" style="height:60vw" class="blueimp-gallery blueimp-gallery-carousel blueimp-gallery-controls blueimp-gallery-display blueimp-gallery-playing">
     <div class="slides"></div>
     <h3 class="title"></h3>
@@ -280,7 +292,6 @@ blueimp.Gallery(
 );
 </script>
 	</section>
-
 	<section id="gallery" class="container">
 
 
@@ -302,6 +313,7 @@ blueimp.Gallery(
 			{% endfor %}
 		</div>
 
+		<script src="static/js/blueimp-gallery.min.js"></script>
 
 		<script>
 		document.getElementById('links').onclick = function (event) {
@@ -315,8 +327,6 @@ blueimp.Gallery(
 		</script>
 	</div>
 	</section>
-
-
 	<style>
 	main {
 	*, *:before, *:after {
