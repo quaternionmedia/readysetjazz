@@ -9,8 +9,8 @@ from email.mime.text import MIMEText
 import config
 from pprint import pprint
 
-# nextGig = {'venue': 'Fallen Heroes Memorial', 'address':'El Macero Country Club - 44571 Clubhouse Drive,  El Macero, CA 95618', 'date':'September 18, 2017', 'starttime':'16:00', 'endtime':'18:30'}
-nextGig = {'venue': 'Crepes and Burgers', 'address':'8000 Auburn Blvd, Citrus Heights, CA 95610', 'date':'September 9, 2017', 'starttime':'18:00', 'endtime':'21:00'}
+nextGig = {'venue': 'Fallen Heroes Memorial', 'address':'El Macero Country Club - 44571 Clubhouse Drive,  El Macero, CA 95618', 'date':'September 18, 2017', 'starttime':'16:00', 'endtime':'18:30'}
+# nextGig = {'venue': 'Crepes and Burgers', 'address':'8000 Auburn Blvd, Citrus Heights, CA 95610', 'date':'September 9, 2017', 'starttime':'18:00', 'endtime':'21:00'}
 
 import csv
 import io
