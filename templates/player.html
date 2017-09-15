@@ -416,7 +416,7 @@ main div:not(:checked) {
 		<div class="container">
 		<h2>Our Next Gig</h2>
 		<p>
-			{{ gig['venue']}} - {{ gig['date'] }} at {{ gig['starttime'] }} - {{gig['endtime']}}
+			{{ gig['venue']}} - {{ gig['date'] }} at {% if gig['starttime'][:2]|int() > 11 %}{{ gig['starttime'][:2]|int() - 12 }}{{ gig['starttime'][2:] }}p{% else %}{{ gig['endtime'] }}{% endif %} - {% if gig['endtime'][:2]|int() > 11 %}{{ gig['endtime'][:2]|int() - 12 }}{{ gig['endtime'][2:] }}p{% else %}{{ gig['endtime'] }}{% endif %}
 		</p>
 		<br />
 <link rel="stylesheet" href="static/css/clock.css" />
