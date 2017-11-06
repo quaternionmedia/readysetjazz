@@ -10,7 +10,7 @@ import config
 from pprint import pprint
 
 # nextGig = {'venue': 'Fallen Heroes Memorial', 'address':'El Macero Country Club - 44571 Clubhouse Drive,  El Macero, CA 95618', 'date':'September 18, 2017', 'starttime':'16:00', 'endtime':'18:30'}
-nextGig = {'venue': 'Crepes and Burgers', 'address':'8000 Auburn Blvd, Citrus Heights, CA 95610', 'date':'October 28, 2017', 'starttime':'17:00', 'endtime':'20:00'}
+nextGig = {'venue': 'Crepes and Burgers', 'address':'8000 Auburn Blvd, Citrus Heights, CA 95610', 'date':'November 11, 2017', 'starttime':'17:00', 'endtime':'20:00'}
 
 import csv
 import io
