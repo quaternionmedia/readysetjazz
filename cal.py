@@ -5,16 +5,17 @@ from oauth2client import tools
 from oauth2client.file import Storage
 import httplib2
 import datetime
+from os import path
 
 
 SCOPES = 'https://www.googleapis.com/auth/calendar.readonly'
-CLIENT_SECRET_FILE = os.path.join('cred', 'client_id.json')
+CLIENT_SECRET_FILE = path.join('cred', 'client_id.json')
 APPLICATION_NAME = 'RSJ calendar man'
 #CALENDAR_ID = 'yourpasswordhere'
 
 
 def get_credentials():
-	credential_path = os.path.join('cred', 'cred.json')
+	credential_path = path.join('cred', 'cred.json')
 	store = Storage(credential_path)
 	flow = client.flow_from_clientsecrets(CLIENT_SECRET_FILE, SCOPES)
 	flow.user_agent = APPLICATION_NAME
