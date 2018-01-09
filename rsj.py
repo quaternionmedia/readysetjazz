@@ -8,25 +8,21 @@ from smtplib import SMTP
 from email.mime.text import MIMEText
 import config
 from pprint import pprint
-
-# nextGig = {'venue': 'Fallen Heroes Memorial', 'address':'El Macero Country Club - 44571 Clubhouse Drive,  El Macero, CA 95618', 'date':'September 18, 2017', 'starttime':'16:00', 'endtime':'18:30'}
-nextGig = {'venue': 'Crepes and Burgers', 'address':'8000 Auburn Blvd, Citrus Heights, CA 95610', 'date':'November 11, 2017', 'starttime':'17:00', 'endtime':'20:00'}
-
+import json
 import csv
 import io
+import cal
 
 
 hug.API(__name__).http.output_format = hug.output_format.html
 
 
-
-
-
-
 client = pymongo.MongoClient(connect=False)
 db = client.rsj
 
-
+store = cal.Storage(path.join('cred', 'cred.json'))
+credentials = store.get()
+calendar = 'yourpasswordhere'
 
 env = Environment(loader=FileSystemLoader('templates'))
 
@@ -88,6 +84,8 @@ def randQuery(fields=None, limit=10):
 		return x
 	return [ d for d in db.media.aggregate( [ {'$match': fields}, { '$sample': {'size': limit }} ])]
 
+
+
 @hug.startup()
 def checkFiles(api): # Check pics folder, make thumbs
 	thumbs = getFiles('static/thumbs', 'jpg', limit=0)
@@ -105,6 +103,7 @@ def checkFiles(api): # Check pics folder, make thumbs
 		im.save(path.join(pic[0], '..', 'thumbs', pic[1]))
 
 
+
 @hug.local()
 @hug.get('/')
 def home():
@@ -114,10 +113,13 @@ def home():
 	pics = randQuery({'type':'jpg'}, limit=0)
 	bios = [m for m in db.musicians.find()]
 	videos =  [m for m in db.videos.find()]
+
+	gigs = cal.get_events(credentials, calendar)
+	print(gigs)
 	print('bios = ', bios)
 	# print('songs = ', songs)
 	# print('pics = ', pics)
-	return env.get_template('player.html').render(songs=songs, pics=pics, gig=nextGig, bios=bios, videos=videos)
+	return env.get_template('player.html').render(songs=songs, pics=pics, gig=gigs[0], gigs=gigs, bios=bios, videos=videos)
 
 @hug.local()
 @hug.post('/contact')

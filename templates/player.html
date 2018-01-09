@@ -416,7 +416,12 @@ main div:not(:checked) {
 		<div class="container">
 		<h2>Our Next Gig</h2>
 		<p>
-			{{ gig['venue']}} - {{ gig['date'] }} at {% if gig['starttime'][:2]|int() > 11 %}{{ gig['starttime'][:2]|int() - 12 }}{{ gig['starttime'][2:] }}p{% else %}{{ gig['endtime'] }}{% endif %} - {% if gig['endtime'][:2]|int() > 11 %}{{ gig['endtime'][:2]|int() - 12 }}{{ gig['endtime'][2:] }}p{% else %}{{ gig['endtime'] }}{% endif %}
+			{{ gig['summary']}} - <script>
+			var t = new Date(Date.parse("{{ gig['start']['dateTime'] }}"));
+			document.write(t.toDateString() + " - " + t.toLocaleTimeString());
+		</script> to <script>
+		document.write(new Date(Date.parse("{{ gig['end']['dateTime'] }}")).toLocaleTimeString());
+	</script>
 		</p>
 		<br />
 <link rel="stylesheet" href="static/css/clock.css" />
@@ -441,18 +446,60 @@ main div:not(:checked) {
 
 <script src="static/js/clock.js" type="text/javascript"></script>
 <script>
-var deadline = new Date(Date.parse("{{gig['date']}} {{gig['starttime']}} -0700"));
+var deadline = new Date(Date.parse("{{ gig['start']['dateTime'] }}"));
 initializeClock('clockdiv', deadline);
 </script>
 
-		<iframe src="//www.google.com/maps/embed/v1/place?q={{ gig['address'] }}
+		<iframe src="https://www.google.com/maps/embed/v1/place?q={{ gig['location'] }}&key=***REMOVED***
 		&zoom=13
 		&attribution_source=Google+Maps+Embed+API
-		&attribution_web_url=https://developers.google.com/maps/documentation/embed/
-		&key=***REMOVED***" allowfullscreen>
+		&attribution_web_url=https://developers.google.com/maps/documentation/embed/" allowfullscreen>
 </iframe></div>
 	</section>
+<section id="calendar">
+	<style>
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+    border: 1px solid #ddd;
+}
 
+th, td {
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even){background-color: #ffffff}
+
+tr:nth-child(odd){background-color: #eeeeee}
+</style>
+<div style="height:200px; overflow-x:auto; overflow-y:auto">
+	<table>
+<tr><th>
+		What
+</th>
+	<th>
+		When
+	</th><th>
+		Where
+	</th>
+</tr>
+	{% for g in gigs %}
+		<tr>
+			<td>{{ g['summary']}}</td>
+			<td><script>
+			var start = new Date(Date.parse("{{ g['start']['dateTime']}}"));
+			document.write(start.toDateString() + " " + start.toLocaleTimeString());</script></td>
+			<td>{{ g['location'] }}</td>
+		</tr>
+	{% endfor %}
+</table>
+{# for g in gigs %}
+{{g}}
+{% endfor #}
+</div>
+</section>
 	<section id="contact">
 		<div class="container">
 			<h2>Hire us!</h2>

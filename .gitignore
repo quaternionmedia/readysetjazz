@@ -2,3 +2,4 @@
 errors.log
 config.py
 static/thumbs
+cred/*
