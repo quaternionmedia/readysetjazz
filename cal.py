@@ -33,7 +33,8 @@ def get_events(credentials, calendar):
 	events = eventsResult.get('items', [])
 	if not events:
 		eventsResult = service.events().list(
-			calendarId=calendar, timeMax=now, maxResults=1, singleEvents=True,
+			calendarId=calendar, timeMax=now, singleEvents=True,
 			orderBy='startTime').execute()
 		events = eventsResult.get('items', [])
-	return events
+		events = [events[-1]]
+	return [e for e in events if e.get('visibility', None) != 'private']

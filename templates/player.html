@@ -135,9 +135,8 @@ form {
 		0% {font-size:  1em;
 		}
 		50% {
-			font-size: 20vw;
-			padding-left: 30vw;
-			padding-top: 40vh;
+			font-size: 16vw;
+			padding-top: 2vw;
 		}
 		100% {
 			font-size: 2em;
@@ -151,12 +150,12 @@ form {
 	#set {
 		animation: size 2.5s, rollIn 1.5s;
 		webkit-animation: size 2.5s, rollIn 1.5s;
-		animation-delay: 2s;
+		animation-delay: 1.5s;
 	}
 	#jazz {
 		animation: size 2.5s, jello 1.5s;
 		webkit-animation: size 2.5s, jello 1.5s;
-		animation-delay: 4s;
+		animation-delay: 3s;
 	}
 	@media screen and (max-height: 450px) {
 		#top {
@@ -418,9 +417,9 @@ main div:not(:checked) {
 		<p>
 			{{ gig['summary']}} - <script>
 			var t = new Date(Date.parse("{{ gig['start']['dateTime'] }}"));
-			document.write(t.toDateString() + " - " + t.toLocaleTimeString());
-		</script> to <script>
-		document.write(new Date(Date.parse("{{ gig['end']['dateTime'] }}")).toLocaleTimeString());
+			document.write(t.toDateString() + " - " + t.toLocaleTimeString().slice(0,-6) + " " +  t.toLocaleTimeString().slice(-2));
+			document.write(" to ");
+			document.write(new Date(Date.parse("{{ gig['end']['dateTime'] }}")).toLocaleTimeString().slice(0,-6) + " " +  t.toLocaleTimeString().slice(-2));
 	</script>
 		</p>
 		<br />
@@ -490,7 +489,7 @@ tr:nth-child(odd){background-color: #eeeeee}
 			<td>{{ g['summary']}}</td>
 			<td><script>
 			var start = new Date(Date.parse("{{ g['start']['dateTime']}}"));
-			document.write(start.toDateString() + " " + start.toLocaleTimeString());</script></td>
+			document.write(start.toDateString() + " - " + start.toLocaleTimeString().slice(0,-6) + " " +  start.toLocaleTimeString().slice(-2));</script></td>
 			<td>{{ g['location'] }}</td>
 		</tr>
 	{% endfor %}
