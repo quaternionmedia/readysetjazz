@@ -17,7 +17,7 @@ import cal
 hug.API(__name__).http.output_format = hug.output_format.html
 
 
-client = pymongo.MongoClient(connect=False)
+client = pymongo.MongoClient('mongodb://mongo:27017', connect=False)
 db = client.rsj
 
 store = cal.Storage(path.join('cred', 'cred.json'))

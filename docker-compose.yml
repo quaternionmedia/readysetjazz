@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  web:
+    image: rsj
+    ports:
+      - "8000:8000"
+  mongo:
+    image: mongo

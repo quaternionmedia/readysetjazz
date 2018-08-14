@@ -1,5 +1,5 @@
 .gitignore
 errors.log
-config.py
-static/thumbs
-cred/*
+rsj/config.py
+rsj/static/thumbs
+rsj/cred/*
