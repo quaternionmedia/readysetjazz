@@ -1,4 +1,4 @@
-FROM alpy
+FROM harpo1224/alpy
 
 RUN apk add git py3-pillow
 RUN pip install -t $(pwd) git+https://github.com/timothycrosley/hug
@@ -6,7 +6,8 @@ RUN pip install -t $(pwd) git+https://github.com/timothycrosley/hug
 COPY ./requirements.txt /
 RUN pip install -r requirements.txt
 
-COPY ./rsj /rsj
+#COPY ./rsj /rsj
+
 WORKDIR /rsj
 
 EXPOSE 8000
