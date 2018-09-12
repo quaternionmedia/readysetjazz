@@ -1,4 +1,4 @@
-FROM alpy
+FROM harpo1224/alpy
 
 RUN apk add git py3-pillow nginx openrc uwsgi g++ linux-headers
 RUN pip install -t $(pwd) git+https://github.com/timothycrosley/hug
@@ -6,8 +6,14 @@ RUN pip install -t $(pwd) git+https://github.com/timothycrosley/hug
 COPY ./requirements.txt /
 RUN pip install -r requirements.txt
 
+<<<<<<< HEAD
 COPY ./rsj /rsj/
 # WORKDIR /rsj
+=======
+#COPY ./rsj /rsj
+
+WORKDIR /rsj
+>>>>>>> 7e52452d5a1d63e34ec613443db43159443aa8e7
 
 EXPOSE 8000
 #CMD python3 rsj.py
