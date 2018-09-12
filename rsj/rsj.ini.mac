@@ -1,12 +1,12 @@
 [uwsgi]
+base = /Users/harpo/readysetjazz.com
 abbr = rsj
-base = /%(abbr)
 chdir = %(base)
-uid = www
-gid = www
+uid = _www
+gid = _www
 #chmod-socket = 664
 chmod-socket = 777
-chown-socket = www
+chown-socket = _www
 
 plugin = python3
 wsgi-file = %(abbr).py

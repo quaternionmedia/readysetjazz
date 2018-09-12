@@ -1,9 +1,18 @@
 version: '3'
 
 services:
+  mongo:
+    image: mongo
+    networks:
+      - db
   web:
     image: rsj
     ports:
-      - "8000:8000"
-  mongo:
-    image: mongo
+      - "8000:80"
+    networks:
+      - db
+    depends_on:
+      - mongo
+    tty: true
+networks:
+  db:
