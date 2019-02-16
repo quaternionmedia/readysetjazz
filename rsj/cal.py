@@ -11,7 +11,7 @@ from os import path
 SCOPES = 'https://www.googleapis.com/auth/calendar.readonly'
 CLIENT_SECRET_FILE = path.join('cred', 'client_id.json')
 APPLICATION_NAME = 'RSJ calendar man'
-#CALENDAR_ID = 'yourpasswordhere'
+#CALENDAR_ID = 'dellarteproductions.com_7ss0rggrpg59qgq7cr9um62n68@group.calendar.google.com'
 
 
 def get_credentials():

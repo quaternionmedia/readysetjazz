@@ -17,12 +17,12 @@ import cal
 hug.API(__name__).http.output_format = hug.output_format.html
 
 
-client = pymongo.MongoClient('mongodb://mongo:27017', connect=False)
+client = pymongo.MongoClient(config.DB_URL, connect=False)
 db = client.rsj
 
 store = cal.Storage(path.join('cred', 'cred.json'))
 credentials = store.get()
-calendar = 'yourpasswordhere'
+calendarID = config.calendarID
 
 env = Environment(loader=FileSystemLoader('templates'))
 
@@ -114,7 +114,7 @@ def home():
 	bios = [m for m in db.musicians.find()]
 	videos =  [m for m in db.videos.find()]
 
-	gigs = cal.get_events(credentials, calendar)
+	gigs = cal.get_events(credentials, calendarID)
 	print(gigs)
 	print('bios = ', bios)
 	# print('songs = ', songs)
@@ -185,19 +185,3 @@ def upload_file(body,request,response):
 @hug.get('/success')
 def win():
 	return 'Upload success! You will return in just a moment. <meta http-equiv="refresh" content="2;url=/"/>'
-
-
-
-@hug.local()
-@hug.post('/slt')
-def slt(body,request,response):
-	#print('body: ', body['formdata'].decode())
-	f = csv.reader(io.StringIO(body['formdata'].decode()))
-	for i in f:
-		msg = MIMEText(env.get_template('congrats.py').render(name=i[0], song=i[1], link=i[3]))
-		msg['From'] = 'mockrock@harpo.me'
-		msg['To'] = i[2]
-		msg['Subject'] = 'Mock Rock Music Video!'
-		if not sendMail(msg):
-			print('error sending to', msg['To'])
-		#print(vars(msg))
