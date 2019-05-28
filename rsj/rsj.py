@@ -22,7 +22,6 @@ db = client.rsj
 
 store = cal.Storage(path.join('cred', 'cred.json'))
 credentials = store.get()
-calendarID = config.calendarID
 
 env = Environment(loader=FileSystemLoader('templates'))
 
@@ -114,9 +113,9 @@ def home():
 	bios = [m for m in db.musicians.find()]
 	videos =  [m for m in db.videos.find()]
 
-	gigs = cal.get_events(credentials, calendarID)
-	print(gigs)
-	print('bios = ', bios)
+	gigs = cal.get_events(credentials, config.CALENDAR_ID)
+	# print(gigs)
+	# print('bios = ', bios)
 	# print('songs = ', songs)
 	# print('pics = ', pics)
 	return env.get_template('player.html').render(songs=songs, pics=pics, gig=gigs[0], gigs=gigs, bios=bios, videos=videos)

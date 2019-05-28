@@ -2,4 +2,6 @@
 errors.log
 rsj/config.py
 rsj/static/thumbs
+rsj/static/pics
+rsj/static/audio
 rsj/cred/*
