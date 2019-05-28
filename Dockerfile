@@ -8,4 +8,4 @@ RUN pip install -r /requirements.txt
 
 # COPY ./rsj/ /app/
 
-# CMD /start-reload.sh
+CMD /start-reload.sh
