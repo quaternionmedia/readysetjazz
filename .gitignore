@@ -5,3 +5,4 @@ rsj/static/thumbs
 rsj/static/pics
 rsj/static/audio
 rsj/cred/*
+rsj/__pycache__/
