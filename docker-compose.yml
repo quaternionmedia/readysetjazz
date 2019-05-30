@@ -19,7 +19,7 @@ services:
       - 'traefik.HTTP.Routers.RSJ.Rule=Host(`dev.readysetjazz.com`)'
       - 'traefik.HTTP.Routers.RSJS.Rule=Host(`dev.readysetjazz.com`)'
       - 'traefik.HTTP.Routers.RSJS.tls=true'
-      - 'traefik.HTTP.Routers.RSJ.middlewares=redirect'
+      - 'traefik.HTTP.Routers.RSJ.middlewares=file.redirect'
       - 'traefik.docker.network=web'
     networks:
       - db
