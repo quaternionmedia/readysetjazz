@@ -39,7 +39,8 @@ MAIL_PASSWORD = 'Your3mailP@ssw4rd'
 MAIL_DEFAULT_SENDER = 'your@email.address'
 MAIL_SENDTO = 'your@email.address'
 CALENDAR_ID = 'YourCalendarID@group.calendar.google.com'
-DB_URL = 'mongodb://mongo:27017'`
+DB_URL = 'mongodb://mongo:27017'
+MAPS_API_KEY = 'YourGoogleMapsAPIKey'`
 
 Sample database entries are provided as [bios.csv](rsj/bios.csv) and [videos.csv](rsj/videos.csv). If the database is not already seeded, they will need to be added to enable their respective components.
 

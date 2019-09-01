@@ -118,7 +118,7 @@ def home():
 	# print('bios = ', bios)
 	# print('songs = ', songs)
 	# print('pics = ', pics)
-	return env.get_template('player.html').render(songs=songs, pics=pics, gig=gigs[0], gigs=gigs, bios=bios, videos=videos)
+	return env.get_template('player.html').render(songs=songs, pics=pics, gig=gigs[0], gigs=gigs, bios=bios, videos=videos, mapsAPIKey=config.MAPS_API_KEY)
 
 @hug.local()
 @hug.post('/contact')

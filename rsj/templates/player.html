@@ -449,7 +449,7 @@ var deadline = new Date(Date.parse("{{ gig['start']['dateTime'] }}"));
 initializeClock('clockdiv', deadline);
 </script>
 
-		<iframe src="https://www.google.com/maps/embed/v1/place?q={{ gig['location'] }}&key=***REMOVED***
+		<iframe src="https://www.google.com/maps/embed/v1/place?q={{ gig['location'] }}&key={{ mapsAPIKey }}
 		&zoom=13
 		&attribution_source=Google+Maps+Embed+API
 		&attribution_web_url=https://developers.google.com/maps/documentation/embed/" allowfullscreen>
